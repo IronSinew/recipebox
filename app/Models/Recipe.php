@@ -40,7 +40,7 @@ class Recipe extends Model
         'user_id' => 'integer',
     ];
 
-    protected $hidden = ["id"];
+    protected $hidden = ['id'];
 
     public function getRouteKeyName(): string
     {
@@ -53,6 +53,7 @@ class Recipe extends Model
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
     }
+
     public function toSearchableArray(): array
     {
         return [

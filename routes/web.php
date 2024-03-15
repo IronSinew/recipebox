@@ -12,7 +12,7 @@ Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->name('home');
 
-Route::prefix("/categories")->name("category.")->group(function () {
+Route::prefix('/categories')->name('category.')->group(function () {
     Route::get('/', [CategoryController::class, 'index'])->name('index');
     Route::get('/list', CategoryListController::class)->name('list');
     Route::get('/{category}', [CategoryController::class, 'show'])->name('show');
