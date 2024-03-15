@@ -1,0 +1,50 @@
+FROM php:8.2-fpm
+
+RUN apt-get update
+RUN apt-get install -y \
+        zlib1g-dev gnupg libpng-dev libzip-dev mariadb-client libxml2-dev libpq-dev cron supervisor
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql zip pcntl posix zip bcmath opcache soap
+RUN pecl install -o -f redis &&  rm -rf /tmp/pear
+RUN docker-php-ext-enable sodium redis
+
+RUN mkdir -p /var/log
+RUN touch /var/log/horizon.log
+
+COPY provision/init-supervisord.sh /usr/local/bin/init.sh
+COPY provision/cronfile /etc/cron.d/laravel-cron
+COPY provision/horizon.conf /tmp
+
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/laravel-cron
+
+# make init file executable
+RUN chmod +x /usr/local/bin/init.sh
+
+#add composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php composer-setup.php --filename=composer
+RUN php -r "unlink('composer-setup.php');"
+RUN mv composer /bin/composer
+#RUN composer self-update 1.10.16
+
+# Install Imagick
+RUN apt-get update && apt-get install -y \
+    imagemagick libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
+
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-configure calendar
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql intl calendar
+
+# Apply cron job
+RUN crontab /etc/cron.d/laravel-cron
+
+# Create the log file to be able to run tail
+RUN touch /var/log/cron.log
+
+# Define working directory.
+WORKDIR /var/www/app
+
+# Run supervisor
+CMD ["/usr/local/bin/init.sh"]

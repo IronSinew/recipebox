@@ -1,0 +1,30 @@
+FROM php:7.3-fpm
+
+RUN apt-get update
+RUN apt-get install -y \
+        zlib1g-dev gnupg libpng-dev cron supervisor libzip-dev
+RUN docker-php-ext-install pdo pdo_mysql zip pcntl posix bcmath opcache
+
+RUN mkdir -p /var/log
+RUN touch /var/log/websockets.log
+
+COPY provision/websockets/supervisord.sh /usr/local/bin/init.sh
+COPY provision/websockets/websockets.conf /tmp
+
+# make init file executable
+RUN chmod +x /usr/local/bin/init.sh
+
+#add composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+RUN php composer-setup.php --filename=composer
+RUN php -r "unlink('composer-setup.php');"
+RUN mv composer /bin/composer
+
+# Create the log file to be able to run tail
+RUN touch /var/log/websockets.log
+
+# Define working directory.
+WORKDIR /var/www/app
+
+# Run supervisor
+CMD ["/usr/local/bin/init.sh"]
