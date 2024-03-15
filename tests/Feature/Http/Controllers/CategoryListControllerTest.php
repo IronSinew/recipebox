@@ -4,7 +4,6 @@ namespace Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Inertia\Testing\AssertableInertia as Assert;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 

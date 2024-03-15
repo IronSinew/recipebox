@@ -24,7 +24,7 @@ final class CategoryControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertInertia(fn (Assert $page) => $page
-            ->component("Category/CategoryIndex")
+            ->component('Category/CategoryIndex')
         );
     }
 
@@ -34,12 +34,12 @@ final class CategoryControllerTest extends TestCase
         $categories = Category::factory()->count(3)->create();
         $randomCategory = $categories->random(1)->first();
 
-        $response = $this->get(route('category.show', ["category" => $randomCategory->slug]));
+        $response = $this->get(route('category.show', ['category' => $randomCategory->slug]));
 
         $response->assertOk();
         $response->assertInertia(fn (Assert $page) => $page
-            ->component("Category/CategoryShow")
-            ->where("category.name", $randomCategory->name)
+            ->component('Category/CategoryShow')
+            ->where('category.name', $randomCategory->name)
         );
     }
 }

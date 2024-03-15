@@ -33,7 +33,7 @@ class Category extends Model implements Sortable
         'id' => 'integer',
     ];
 
-    protected $hidden = ["id"];
+    protected $hidden = ['id'];
 
     public function getRouteKeyName(): string
     {

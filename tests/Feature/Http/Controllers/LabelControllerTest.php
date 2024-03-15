@@ -24,8 +24,8 @@ final class LabelControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertInertia(fn (Assert $page) => $page
-            ->component("Label/LabelIndex")
-            ->has("labels", 3)
+            ->component('Label/LabelIndex')
+            ->has('labels', 3)
         );
     }
 
@@ -35,12 +35,12 @@ final class LabelControllerTest extends TestCase
         $labels = Label::factory()->count(3)->create();
         $randomLabel = $labels->random(1)->first();
 
-        $response = $this->get(route('label.show', ["label" => $randomLabel->slug]));
+        $response = $this->get(route('label.show', ['label' => $randomLabel->slug]));
 
         $response->assertOk();
         $response->assertInertia(fn (Assert $page) => $page
-            ->component("Label/LabelShow")
-            ->where("label.name", $randomLabel->name)
+            ->component('Label/LabelShow')
+            ->where('label.name', $randomLabel->name)
         );
     }
 }
