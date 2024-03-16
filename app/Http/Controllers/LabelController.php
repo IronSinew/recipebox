@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Label;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
