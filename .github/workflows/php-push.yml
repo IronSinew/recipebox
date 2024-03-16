@@ -81,7 +81,7 @@ jobs:
         run: APP_ENV=testing php artisan key:generate
 
       - name: Tests
-        run: php artisan test -p --coverage-clover=clover.xml
+        run: php artisan test --coverage-clover=clover.xml
         env:
           DB_HOST: localhost
 
