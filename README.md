@@ -5,14 +5,14 @@
 Recipebox is a [Laravel Jetstream](https://jetstream.laravel.com)-based site using Vue and InertiaJS. It's also built with:
 - Docker
 - Caddy
-- PostgresSQL
+- PostgreSQL
 - Laravel Scout
 
 ## Installation Prerequisites
 - Docker Desktop
 - [Bun](https://bun.sh)
 - **If using Windows:**
-    - You will need to setup [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) (Ubuntu is known to work) and configure Docker Desktop to use it as a [backend](https://docs.docker.com/desktop/windows/wsl/).
+    - You will need to set up [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) (Ubuntu is known to work) and configure Docker Desktop to use it as a [backend](https://docs.docker.com/desktop/windows/wsl/).
     - All of the following command line commands should be run inside your WSL2 / shell.
 
 ## Get the Code and Configure Git
@@ -37,13 +37,13 @@ It is highly likely that `.env` will not be present, but rather, `.env.example` 
 `docker-compose exec php php artisan key:generate`  
 `bun install`
 
-Confirm the `recipebox` schema was created during pgsql container creation, otherwise create the schema.  
+Confirm the `recipebox` schema was created during PostgreSQL container creation, otherwise, create the schema.  
 `docker-compose exec php php artisan migrate` 
 
 If migration fails 
 `docker-compose exec pgsql createdb -U root recipebox`  
 
-Also create the testing schema
+Also, create the testing schema
 `docker-compose exec pgsql createdb -U root recipebox_test`
 
 Configure folder permissions.  
@@ -66,7 +66,7 @@ Access mailhog locally at <http://localhost:1025>
 ## Start Application (after install)
 `docker-compose up -d`  
 `bun run dev`
-- It may not be an awful idea to check migration / npm / composer deps in case other installs are needed as well.
+- It may not be an awful idea to check migration / npm / composer dependencies in case other installs are needed as well.
 
 ---
 
@@ -110,4 +110,4 @@ docker-compose up -d php
 ### Possible future features
 - [ ] "I made it" counter
 - [ ] Reviews/ratings
-- [ ] Roles for access to recipe manager as contributor
+- [ ] Roles for access to the recipe manager as a contributor
