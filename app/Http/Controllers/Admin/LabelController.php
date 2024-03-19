@@ -14,7 +14,10 @@ class LabelController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Label/LabelIndex')->with([
-            'labels' => fn () => Label::orderBy('order_column')->withCount('recipes')->get()->makeVisible('id'),
+            'labels' => fn () => Label::orderBy('order_column')->withCount('recipes')
+                ->withTrashed()
+                ->get()
+                ->makeVisible('id'),
         ]);
     }
 
@@ -44,5 +47,14 @@ class LabelController extends Controller
 
         return redirect()->route('admin.labels.index')
             ->withBanner("Deleted {$name}", BannerTypeEnum::danger);
+    }
+
+    public function restore(Label $label)
+    {
+        $name = $label->name;
+        $label->restore();
+
+        return redirect()->route('admin.labels.index')
+            ->withBanner("Restored {$name}");
     }
 }

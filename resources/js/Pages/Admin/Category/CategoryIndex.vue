@@ -11,7 +11,7 @@ import {router, useForm} from "@inertiajs/vue3";
 import {onMounted, ref, watch} from "vue";
 
 const props = defineProps({
-    labels: {
+    categories: {
         type: [Array, Object],
         required: false,
         default() {
@@ -20,12 +20,12 @@ const props = defineProps({
     }
 });
 
-watch(() => props.labels, (data, prevData) => {
+watch(() => props.categories, (data, prevData) => {
     tableData.value = data;
 });
 
 onMounted(() => {
-    tableData.value = props.labels;
+    tableData.value = props.categories;
 });
 
 const tableData = ref();
@@ -36,18 +36,18 @@ const columns = [
 ];
 
 const reloadTableData = () => {
-    router.reload({ only: ['labels'], preserveScroll: true, })
+    router.reload({ only: ['categories'], preserveScroll: true, })
 }
 
 const onRowReorder = (event) => {
     tableData.value = event.value;
-    axios.post(route("admin.labels.set_order"), tableData.value.map(row => row.id)).then(() => {
+    axios.post(route("admin.categories.set_order"), tableData.value.map(row => row.id)).then(() => {
         reloadTableData();
     })
 };
 
 const saveNew = () => {
-    form.post(route("admin.labels.store"), {
+    form.post(route("admin.categories.store"), {
         preserveScroll: true,
         onSuccess: () => {
             reloadTableData();
@@ -64,11 +64,11 @@ const form = useForm({
 const confirm = useConfirm();
 const deleteRowData = (data) => {
     confirm.require({
-        message: "Are you sure you want to delete this label?",
-        header: `Label: ${data.name}`,
+        message: "Are you sure you want to delete this category?",
+        header: `Category: ${data.name}`,
         icon: "pi pi-exclamation-triangle",
         accept: () => {
-            router.delete(route("admin.labels.destroy", {
+            router.delete(route("admin.categories.destroy", {
                 slug: data.slug,
             }), {
                 preserveScroll: true,
@@ -81,30 +81,30 @@ const deleteRowData = (data) => {
 };
 
 const restoreRowData = (data) => {
-    router.put(route("admin.labels.restore", {
-        slug: data.slug,
-    }), {
-        preserveScroll: true,
-        onFinish: () => {
-            reloadTableData();
-        }
-    })
+    router.put(route("admin.categories.restore", {
+            slug: data.slug,
+        }), {
+            preserveScroll: true,
+            onFinish: () => {
+                reloadTableData();
+            }
+        })
 };
 </script>
 
 <template>
-    <AppLayout title="Label Admin">
+    <AppLayout title="Category Admin">
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-row mb-5">
-                    <h1 class="text-5xl font-extrabold dark:text-white grow">Label Admin</h1>
+                    <h1 class="text-5xl font-extrabold dark:text-white grow">Category Admin</h1>
                     <Button @click="showNewForm = !showNewForm" label="Add New"></Button>
                 </div>
                 <form @submit.prevent="saveNew" :class="[showNewForm ? 'scale-1 h-full' : 'scale-0 h-0']" class="transition-all ease-in-out delay-150 duration-500 mb-5">
                     <Card>
                         <template #content>
-                            <h5 class="text-xl font-bold text-primary-200 mb-3">New Label</h5>
-                                <InputText v-model="form.name" placeholder="Label Name"  class="font-normal"/>
+                            <h5 class="text-xl font-bold text-primary-200 mb-3">New Category</h5>
+                                <InputText v-model="form.name" placeholder="Category Name"  class="font-normal"/>
                                 <div :class="[form.errors.name ? 'opacity-100' : 'opacity-0']" class="transition-opacity ease-in-out delay-150 duration-300 pt-4 text-sm text-red-500 font-bold">
                                     {{ form.errors.name }}
                                 </div>

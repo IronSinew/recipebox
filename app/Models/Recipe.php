@@ -64,7 +64,7 @@ class Recipe extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)->orderBy((new Category)->determineOrderColumnName());
     }
 
     public function user(): BelongsTo
