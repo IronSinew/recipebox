@@ -36,6 +36,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            'can_access_admin_area' => $request->user()?->hasAccessToAdminArea() ?? false,
         ]);
     }
 }

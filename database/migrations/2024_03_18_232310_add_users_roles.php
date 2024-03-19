@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('labels', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
-            $table->integer('order_column');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('role', ['contributor', 'admin'])->nullable();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('labels');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role');
+        });
     }
 };

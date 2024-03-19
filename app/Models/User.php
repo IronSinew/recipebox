@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -60,6 +62,17 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRoleEnum::class,
         ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role == UserRoleEnum::ADMIN;
+    }
+
+    public function hasAccessToAdminArea(): bool
+    {
+        return in_array($this->role, [UserRoleEnum::ADMIN, UserRoleEnum::CONTRIBUTOR]);
     }
 }

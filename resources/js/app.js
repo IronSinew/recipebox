@@ -10,6 +10,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import PrimeVue from 'primevue/config';
 import Ripple from 'primevue/ripple';
 import BadgeDirective from 'primevue/badgedirective';
+import ConfirmationService from "primevue/confirmationservice";
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -28,6 +29,7 @@ createInertiaApp({
             })
             .directive("ripple", Ripple)
             .directive("badge", BadgeDirective)
+            .use(ConfirmationService)
             .mount(el);
     },
     progress: {
