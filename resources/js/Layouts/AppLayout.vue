@@ -1,13 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted, watchEffect} from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import Menubar from 'primevue/menubar';
 import Button from "primevue/button";
 import AutoComplete from "primevue/autocomplete";
 import Badge from "primevue/badge";
+import Message from 'primevue/message';
 
 import ApplicationMark from '@/Components/ApplicationMark.vue';
-import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 
@@ -48,6 +48,20 @@ onMounted(() => {
             })
         });
     })
+
+    if (page.props.can_access_admin_area) {
+        menuItems.value.push({
+            label: 'Admin',
+            icon: 'pi pi-lock',
+            routeGroup: "admin.*",
+            items: [
+                {
+                    label: 'Labels',
+                    route: 'admin.labels.index'
+                }
+            ],
+        })
+    }
 });
 
 const selectedRecipe = ref();
@@ -66,6 +80,14 @@ const searchRecipes = async (event) => {
     });
 };
 
+const bannerStyle = ref('success');
+const bannerMessage = ref('');
+
+watchEffect(async () => {
+    bannerStyle.value = page.props.jetstream.flash?.bannerStyle || 'success';
+    bannerMessage.value = page.props.jetstream.flash?.banner || '';
+});
+
 const logout = () => {
     router.post(route('logout'));
 };
@@ -74,8 +96,6 @@ const logout = () => {
 <template>
     <div>
         <Head :title="title" />
-
-        <Banner />
 
         <div class="min-h-screen bg-gray-100 dark:bg-surface-800">
             <nav class="bg-white dark:bg-gray-700">
@@ -196,6 +216,10 @@ const logout = () => {
                     <slot name="header" />
                 </div>
             </header>
+
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <Message v-if="bannerMessage" :severity="bannerStyle">{{ bannerMessage }}</Message>
+            </div>
 
             <!-- Page Content -->
             <main>

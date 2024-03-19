@@ -17,6 +17,7 @@
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.0",
         "brianium/paratest": "^7.4",
         "fakerphp/faker": "^1.23",
         "jasonmccreary/laravel-test-assertions": "^2.4",
@@ -61,6 +62,16 @@
         ],
         "pint-check": [
             "@php ./vendor/bin/pint --test"
+        ],
+        "test-cov": [
+            "@putenv XDEBUG_MODE=coverage",
+            "@php -d memory_limit=-1 -d opcache.enable_cli=1 artisan test --coverage --parallel --processes=4"
+        ],
+        "ide-generate": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan ide-helper:eloquent",
+            "@php artisan ide-helper:models -n"
         ]
     },
     "extra": {
@@ -68,7 +79,9 @@
             "dev-master": "11.x-dev"
         },
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "barryvdh/laravel-ide-helper"
+            ]
         }
     },
     "config": {

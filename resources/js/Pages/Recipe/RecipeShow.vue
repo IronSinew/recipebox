@@ -51,7 +51,7 @@ const props = defineProps({
                                 </Link>
                             </div>
                             <div class="lg:hidden mb-10"></div>
-                            <div>
+                            <div v-if="recipe.labels.length">
                                 Labels:
                                 <Link v-for="label in recipe.labels" :key="label.slug" :href="route('label.show', {label:label.slug})" class="mr-2">
                                     <Chip :label="label.name"></Chip>

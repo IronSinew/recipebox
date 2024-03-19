@@ -1,7 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Card from "primevue/card";
-import Badge from "primevue/badge";
 import Button from "primevue/button";
 import {Link, router} from "@inertiajs/vue3";
 
