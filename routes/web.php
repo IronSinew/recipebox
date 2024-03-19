@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\LabelController as AdminLabelController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryListController;
@@ -33,8 +34,19 @@ Route::prefix('/admin')->name('admin.')->middleware([
     HasAdminAreaAccess::class])
     ->group(function () {
         Route::middleware(IsAdmin::class)->group(function () {
+            // labels
             Route::post('/labels/order', [AdminLabelController::class, 'setNewOrder'])->name('labels.set_order');
+            Route::put('/labels/{label}/restore', [AdminLabelController::class, 'restore'])
+                ->withTrashed()
+                ->name('labels.restore');
             Route::resource('labels', AdminLabelController::class)->except('show', 'create');
+
+            // categories
+            Route::post('/categories/order', [AdminCategoryController::class, 'setNewOrder'])->name('categories.set_order');
+            Route::put('/categories/{category}/restore', [AdminCategoryController::class, 'restore'])
+                ->withTrashed()
+                ->name('categories.restore');
+            Route::resource('categories', AdminCategoryController::class)->except('show', 'create');
         });
     });
 

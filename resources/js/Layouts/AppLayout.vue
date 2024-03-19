@@ -58,6 +58,10 @@ onMounted(() => {
                 {
                     label: 'Labels',
                     route: 'admin.labels.index'
+                },
+                {
+                    label: 'Categories',
+                    route: 'admin.categories.index'
                 }
             ],
         })

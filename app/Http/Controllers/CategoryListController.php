@@ -9,6 +9,6 @@ class CategoryListController extends Controller
 {
     public function __invoke(): JsonResponse
     {
-        return response()->json(Category::select('slug', 'name')->get());
+        return response()->json(Category::select('slug', 'name')->orderBy('order_column')->get());
     }
 }
