@@ -71,28 +71,16 @@ Access mailhog locally at <http://localhost:1025>
 ---
 
 ## Extras
-You may want to add these aliases to your `.bashrc` or `.bash_aliases` file for working with Docker easier. Use these commands at the root of the project.
-
-    alias dockup="docker-compose up -d"
-    alias dockdown="docker-compose down"
-    dockin() {
-        docker exec -it "$1" /bin/bash
-    }
 
 ### Start application:
-`dockup`
+`docker-compose up -d`
 
 ### Stop application:
-`dockdown`
-
-### Access Containers Directly
-`dockin <container_name>`  
-Example:  
-`dockin recipebox-php-1`  
+`docker-compose down`
 
 ### Xdebug
 
-Xdebug is available in the PHP container but is turned off by default. To turn it on, set `XDEBUG_MODE` (`XDEBUG_MODE=develop` is Xdebug's default, other options are [documented](https://xdebug.org/docs/all_settings#mode)) in `.env` and restart PHP via docker-compose:
+Xdebug is available in the PHP container but is turned off by default. To turn it on, set `XDEBUG_MODE` (`XDEBUG_MODE=develop` as Xdebug's default, other options are [documented](https://xdebug.org/docs/all_settings#mode)) in `.env` and restart PHP via docker-compose:
 
 ```
 docker-compose up -d php
@@ -101,7 +89,7 @@ docker-compose up -d php
 # Roadmap
 ### Admin section
 - [x] Label Manager
-- [ ] Category Manager
+- [x] Category Manager
 - [ ] Recipe Manager
 - [ ] Image uploads
 ### Other
@@ -110,4 +98,4 @@ docker-compose up -d php
 ### Possible future features
 - [ ] "I made it" counter
 - [ ] Reviews/ratings
-- [ ] Roles for access to the recipe manager as a contributor
+- [x] Roles for access to the recipe manager as a contributor
