@@ -100,7 +100,7 @@ docker-compose up -d php
 
 # Roadmap
 ### Admin section
-- [ ] Label Manager
+- [x] Label Manager
 - [ ] Category Manager
 - [ ] Recipe Manager
 - [ ] Image uploads
