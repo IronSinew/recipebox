@@ -16,13 +16,17 @@ const markdownToHtml = computed(() => marked.parse(props.body || "") )
 </template>
 
 <style lang="scss" scoped>
-.markdown-container::v-deep {
-    p {
+.markdown-container {
+    &:deep(p) {
         @apply mb-2;
     }
 
-    h1, h2, h3, h4, h5 {
+    &:deep(h1), &:deep(h2), &:deep(h3), &:deep(h4), &:deep(h5) {
         @apply mb-3;
+    }
+
+    &:deep(a) {
+        @apply text-primary-400;
     }
 }
 </style>
