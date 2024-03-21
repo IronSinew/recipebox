@@ -25,6 +25,9 @@ class Recipe extends Model
         'serving',
         'ingredients',
         'instructions',
+        'description',
+        'cook_time',
+        'prep_time',
         'published_at',
         'user_id',
     ];
@@ -58,7 +61,7 @@ class Recipe extends Model
     {
         return [
             'name' => $this->name,
-            'ingredients' => $this->ingredients,
+            //            'ingredients' => $this->ingredients,
         ];
     }
 

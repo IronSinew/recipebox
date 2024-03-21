@@ -14,9 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // @codeCoverageIgnoreStart
         if ($this->app->isLocal()) {
             $this->app->register(IdeHelperServiceProvider::class);
         }
+        // @codeCoverageIgnoreEnd
 
         RedirectResponse::macro('withBanner', function (string $message, ?BannerTypeEnum $bannerType = BannerTypeEnum::success) {
             // @phpstan-ignore-next-line

@@ -62,6 +62,10 @@ onMounted(() => {
                 {
                     label: 'Categories',
                     route: 'admin.categories.index'
+                },
+                {
+                    label: 'Recipes',
+                    route: 'admin.recipes.index'
                 }
             ],
         })
@@ -144,17 +148,16 @@ const logout = () => {
                                             @complete="searchRecipes($event)"
                                         >
                                             <template #item="slotProps">
-                                                <Link
-                                                    v-if="slotProps.item.slug"
-                                                    :href="route('recipe.show', {recipe:slotProps.item.slug})"
-                                                    class="flex items-center"
-                                                >
-                                                    <div class="ml-2">
-                                                        <p class="text-sm font-semibold leading-none text-primary">
-                                                            {{ slotProps.item.name }}
-                                                        </p>
-                                                    </div>
-                                                </Link>
+                                                <div v-if="slotProps.item.slug" class="ml-2">
+                                                    <p class="text-sm font-semibold leading-none text-primary">
+                                                        {{ slotProps.item.name }}
+                                                    </p>
+                                                    <Link
+                                                        :href="route('recipe.show', {recipe:slotProps.item.slug})"
+                                                        class="absolute inset-0"
+                                                    >
+                                                    </Link>
+                                                </div>
                                                 <div v-else class="h-full">
                                                     No Result
                                                 </div>
