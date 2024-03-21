@@ -49,6 +49,6 @@ class Label extends Model implements Sortable
 
     public function recipes(): BelongsToMany
     {
-        return $this->belongsToMany(Recipe::class);
+        return $this->belongsToMany(Recipe::class)->orderBy('id', 'desc');
     }
 }

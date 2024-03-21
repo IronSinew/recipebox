@@ -2,6 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    body {
+        @apply text-surface-700 dark:text-white/70
+    }
+
+    h1 {
+        @apply text-4xl text-primary-200;
+        .primary {
+            @apply text-primary-400;
+        }
+    }
+    h2 {
+        @apply text-3xl text-primary-200;
+        .primary {
+            @apply text-primary-400;
+        }
+    }
+    h3 {
+        @apply text-2xl text-primary-200;
+        .primary {
+            @apply text-primary-400;
+        }
+    }
+    h4 {
+        @apply text-xl text-primary-200;
+        .primary {
+            @apply text-primary-400;
+        }
+    }
+    h5 {
+        @apply text-lg text-primary-200;
+        .primary {
+            @apply text-primary-400;
+        }
+    }
+    ul {
+        list-style: inside;
+    }
+
+    ol {
+        list-style: decimal;
+        @apply ml-4;
+    }
+}
+
 :root {
     --primary-50: 255 247 237;
     --primary-100: 255 237 213;
@@ -27,10 +72,6 @@
     --surface-800: 31 41 55;
     --surface-900: 17 24 39;
     --surface-950: 8 8 8;
-}
-
-h1, h2 {
-    color: var(--surface-0);
 }
 
 [x-cloak] {

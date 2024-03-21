@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->index();
             $table->string('serving');
+            $table->integer('prep_time')->default(0);
+            $table->integer('cook_time')->default(0);
+            $table->integer('total_time')->storedAs('cook_time + prep_time');
             $table->longText('ingredients');
             $table->longText('instructions');
             $table->longText('description')->nullable();

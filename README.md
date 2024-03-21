@@ -90,11 +90,14 @@ docker-compose up -d php
 ### Admin section
 - [x] Label Manager
 - [x] Category Manager
-- [ ] Recipe Manager
+- [x] Recipe Manager
 - [ ] Image uploads
+- [ ] Paginate Recipe Manager
+- [ ] User Management
 ### Other
-- [ ] Customization of intro blurb
-- [ ] Recent recipes component
+- [ ] Customizable intro blurb and logo
+- [x] Recent recipes on homepage
+- [ ] Infinite scroll for recipe lists
 ### Possible future features
 - [ ] "I made it" counter
 - [ ] Reviews/ratings
