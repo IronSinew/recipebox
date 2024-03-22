@@ -93,3 +93,4 @@ docker-compose up -d php
 - [ ] Reviews/ratings
 - [x] Roles for access to the recipe manager as a contributor
 - [ ] Associate images to labels/categories (?)
+- [ ] [Recipe schema markup](https://developers.google.com/search/docs/appearance/structured-data/recipe)
