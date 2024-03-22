@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Laravel\Scout\Searchable;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
@@ -67,14 +67,14 @@ class Recipe extends Model implements HasMedia
     protected function hero(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('hero')?->getUrl() ?? "",
+            get: fn () => $this->getFirstMedia('hero')?->getUrl() ?? '',
         );
     }
 
     protected function heroPreview(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('hero')?->preview_url ?? "",
+            get: fn () => $this->getFirstMedia('hero')?->preview_url ?? '',
         );
     }
 
