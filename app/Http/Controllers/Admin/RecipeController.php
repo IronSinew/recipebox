@@ -10,6 +10,7 @@ use App\Models\Recipe;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 use Inertia\Inertia;
 
 class RecipeController extends Controller
@@ -57,7 +58,7 @@ class RecipeController extends Controller
     public function edit(Recipe $recipe)
     {
         return Inertia::render('Admin/Recipe/RecipeEdit')->with([
-            'recipe' => fn () => $recipe->makeVisible('id')->loadMissing('labels', 'categories'),
+            'recipe' => fn () => $recipe->makeVisible('id')->loadMissing('labels', 'categories', 'media'),
             'labels' => fn () => Label::withTrashed()
                 ->orderBy('order_column')
                 ->get()
@@ -66,6 +67,7 @@ class RecipeController extends Controller
                 ->orderBy('order_column')
                 ->get()
                 ->makeVisible('id'),
+            'images' => fn () => $recipe->loadMissing('media')->media,
         ]);
     }
 
@@ -127,5 +129,23 @@ class RecipeController extends Controller
 
         return redirect()->route('admin.recipes.index')
             ->withBanner("Restored {$name}");
+    }
+
+    public function imageStore(Recipe $recipe, Request $request)
+    {
+        $request->validate([
+            'images' => ['array'],
+            'images.*' => ['required', File::image()->max(10 * 1024)],
+        ]);
+
+        foreach ($request->images as $key => $image) {
+            $recipe->addMediaFromRequest("images.{$key}")
+                ->setName("{$recipe->name} Image")
+                ->setFileName(sprintf('%s-%s.%s', $recipe->slug, \Str::random(6), $image->extension()))
+                ->preservingOriginal()
+                ->toMediaCollection();
+        }
+
+        return response()->noContent();
     }
 }

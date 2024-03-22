@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Recipe extends Model
+class Recipe extends Model implements HasMedia
 {
-    use HasFactory, HasSlug, Searchable, SoftDeletes;
+    use HasFactory, HasSlug, InteractsWithMedia, Searchable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -45,6 +50,8 @@ class Recipe extends Model
 
     protected $hidden = ['id'];
 
+    protected $appends = ['hero', 'hero_preview'];
+
     public function getRouteKeyName(): string
     {
         return 'slug';
@@ -55,6 +62,35 @@ class Recipe extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('name')
             ->saveSlugsTo('slug');
+    }
+
+    protected function hero(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getFirstMedia('hero')?->getUrl() ?? '',
+        );
+    }
+
+    protected function heroPreview(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getFirstMedia('hero')?->preview_url ?? '',
+        );
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Fit::Contain, 600, 400)
+            ->nonQueued();
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('hero')
+            ->singleFile();
     }
 
     public function toSearchableArray(): array
@@ -73,11 +109,6 @@ class Recipe extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function images(): BelongsTo
-    {
-        return $this->belongsTo(Image::class);
     }
 
     public function labels(): BelongsToMany

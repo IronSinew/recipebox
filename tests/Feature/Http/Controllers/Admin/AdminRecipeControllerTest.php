@@ -118,7 +118,8 @@ final class AdminRecipeControllerTest extends TestCase
         $response->assertOk();
         $response->assertInertia(fn (Assert $page) => $page
             ->component('Admin/Recipe/RecipeEdit')
-            ->where('recipe', [])
+            ->missing('recipe.name')
+            ->missing('recipe.id')
         );
     }
 

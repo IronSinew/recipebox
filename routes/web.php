@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\LabelController as AdminLabelController;
 use App\Http\Controllers\Admin\RecipeController as AdminRecipeController;
 use App\Http\Controllers\CategoryController;
@@ -32,6 +33,9 @@ Route::prefix('/admin')->name('admin.')->middleware([
     config('jetstream.auth_session'),
     HasAdminAreaAccess::class])
     ->group(function () {
+        /**
+         * Admin only, not contributors
+         */
         Route::middleware(IsAdmin::class)->group(function () {
             // labels
             Route::post('/labels/order', [AdminLabelController::class, 'setNewOrder'])->name('labels.set_order');
@@ -46,15 +50,19 @@ Route::prefix('/admin')->name('admin.')->middleware([
                 ->withTrashed()
                 ->name('categories.restore');
             Route::resource('categories', AdminCategoryController::class)->except('show', 'create');
-
-            // recipes
-            Route::put('/recipes/{recipe}/restore', [AdminRecipeController::class, 'restore'])
-                ->withTrashed()
-                ->name('recipes.restore');
-            Route::resource('recipes', AdminRecipeController::class)
-                ->except('show')
-                ->withTrashed(['edit']);
         });
+
+        /**
+         * Contributor-allowed
+         */
+        // recipes
+        Route::put('/recipes/{recipe}/restore', [AdminRecipeController::class, 'restore'])->withTrashed()->name('recipes.restore');
+        Route::post('/recipes/{recipe}/image', [AdminRecipeController::class, 'imageStore'])->withTrashed()->name('recipes.images.store');
+        Route::resource('recipes', AdminRecipeController::class)->except('show')->withTrashed(['edit']);
+
+        // images
+        Route::delete('/images/{media}', [ImageController::class, 'destroy'])->name('images.destroy');
+        Route::post('/images/{media}/hero', [ImageController::class, 'makeHero'])->name('images.make_hero');
     });
 
 Route::middleware([

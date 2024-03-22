@@ -2,8 +2,10 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Card from "primevue/card";
 import Chip from "primevue/chip";
+import Galleria from "primevue/galleria";
 import {Link, router} from "@inertiajs/vue3";
 import Markdown from "@/Components/Markdown.vue";
+import {ref} from "vue";
 
 const props = defineProps({
     recipe: {
@@ -14,6 +16,24 @@ const props = defineProps({
         },
     },
 });
+
+const responsiveOptions = ref([
+    {
+        breakpoint: '1300px',
+        numVisible: 4
+    },
+    {
+        breakpoint: '575px',
+        numVisible: 1
+    }
+]);
+const mediaIndex = ref(0);
+const mediaDisplay = ref(false);
+
+const imageClick = (index) => {
+    mediaIndex.value = index;
+    mediaDisplay.value = true;
+};
 </script>
 
 <template>
@@ -22,8 +42,8 @@ const props = defineProps({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <Card style="overflow: hidden; position: relative;" id="recipe-card-view">
                     <template #header>
-                        <div class="print:hidden">
-                            <img class="object-fill w-full" src="https://placehold.co/350x100?text=No+Image+yet" />
+                        <div v-if="recipe.hero" class="print:hidden">
+                            <img class="object-center object-cover w-full h-96" :src="recipe.hero" />
                         </div>
                     </template>
                     <template #content>
@@ -37,6 +57,28 @@ const props = defineProps({
                                 <div>Serving: {{ recipe.serving }}</div>
                                 <h5 class="text-sm mt-2">Last Updated: {{ new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale).format(new Date(recipe.updated_at)) }}</h5>
                                 <Markdown v-if="recipe.description" :body="recipe.description" class="mt-10"></Markdown>
+                                <Galleria v-model:activeIndex="mediaIndex"
+                                          v-model:visible="mediaDisplay"
+                                          :value="recipe.media"
+                                          :responsiveOptions="responsiveOptions"
+                                          :numVisible="5"
+                                          :circular="true"
+                                          :fullScreen="true"
+                                          :showThumbnails="false"
+                                          class="w-full max-h-64"
+                                >
+                                    <template #item="slotProps">
+                                        <img :src="slotProps.item.original_url" alt="" class="w-full cursor-pointer" @click="mediaDisplay = false;" />
+                                    </template>
+                                    <template #thumbnail="slotProps">
+                                        <img :src="slotProps.item.preview_url" alt="" class="" />
+                                    </template>
+                                </Galleria>
+                                <div v-if="recipe.media" class="flex flex-wrap w-full">
+                                    <div v-for="(image, index) of recipe.media" :key="index" class="pr-3">
+                                        <img :src="image.preview_url" class="cursor-pointer max-h-32" alt="" @click="imageClick(index)" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="lg:col-span-4 lg:row-span-3 lg:col-start-3 lg:row-start-2">
                                 <h3 class="text-xl text-primary-200 mb-4 mt-4">Instructions:</h3>

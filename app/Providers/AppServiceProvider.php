@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Enums\BannerTypeEnum;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        Model::preventLazyLoading(! app()->isProduction());
+        Model::preventAccessingMissingAttributes(! app()->isProduction());
+
         // @codeCoverageIgnoreStart
         if ($this->app->isLocal()) {
             $this->app->register(IdeHelperServiceProvider::class);

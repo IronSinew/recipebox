@@ -91,7 +91,7 @@ docker-compose up -d php
 - [x] Label Manager
 - [x] Category Manager
 - [x] Recipe Manager
-- [ ] Image uploads
+- [x] Image uploads
 - [ ] Paginate Recipe Manager
 - [ ] User Management
 ### Other
@@ -102,3 +102,4 @@ docker-compose up -d php
 - [ ] "I made it" counter
 - [ ] Reviews/ratings
 - [x] Roles for access to the recipe manager as a contributor
+- [ ] Associate images to labels/categories (?)
