@@ -61,8 +61,8 @@ Route::prefix('/admin')->name('admin.')->middleware([
         Route::resource('recipes', AdminRecipeController::class)->except('show')->withTrashed(['edit']);
 
         // images
-        Route::delete("/images/{media}", [ImageController::class, "destroy"])->name("images.destroy");
-        Route::post("/images/{media}/hero", [ImageController::class, "makeHero"])->name("images.make_hero");
+        Route::delete('/images/{media}', [ImageController::class, 'destroy'])->name('images.destroy');
+        Route::post('/images/{media}/hero', [ImageController::class, 'makeHero'])->name('images.make_hero');
     });
 
 Route::middleware([
