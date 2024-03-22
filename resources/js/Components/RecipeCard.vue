@@ -28,7 +28,7 @@ defineProps({
     </div>
     <div v-else class="recipe-card transition ease-in-out hover:scale-110 relative">
         <img
-            src="https://i.ibb.co/tpCdNcX/stew.jpg"
+            :src="recipe.hero_preview ? recipe.hero_preview : 'https://placehold.co/350x200?text=No+Image+yet'"
             alt="stew"
             class="w-full h-32 sm:h-48 object-cover"
         />

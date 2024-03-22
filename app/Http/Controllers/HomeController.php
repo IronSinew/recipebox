@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function __invoke(Request $request): Response
     {
         return Inertia::render('Dashboard')->with([
-            'most_recent_recipes' => Inertia::lazy(fn () => Recipe::with('images', 'labels', 'categories')
+            'most_recent_recipes' => Inertia::lazy(fn () => Recipe::with('labels', 'categories')
                 ->orderBy('id', 'desc')
                 ->limit(3)
                 ->get()),

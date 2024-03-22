@@ -49,3 +49,4 @@ cert.pem
 /draft.yaml
 /.blueprint
 /.editorconfig
+/storage/media-library/*

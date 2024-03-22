@@ -11,7 +11,7 @@ class RecipeController extends Controller
 {
     public function __invoke(Recipe $recipe, Request $request): Response
     {
-        $recipe->loadMissing('images', 'labels', 'categories');
+        $recipe->loadMissing('labels', 'categories');
 
         return Inertia::render('Recipe/RecipeShow')->with([
             'recipe' => fn () => $recipe,

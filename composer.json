@@ -13,6 +13,7 @@
         "laravel/scout": "^10.8",
         "laravel/tinker": "^2.9",
         "spatie/eloquent-sortable": "^4.2",
+        "spatie/laravel-medialibrary": "^11.0.0",
         "spatie/laravel-sluggable": "^3.6",
         "tightenco/ziggy": "^2.0"
     },

@@ -4,6 +4,7 @@ import Breadcrumb from 'primevue/breadcrumb';
 import Button from "primevue/button";
 import Card from "primevue/card";
 import Fieldset from "primevue/fieldset";
+import FileUpload from "primevue/fileupload";
 import InputText from "primevue/inputtext";
 import InputNumber from "primevue/inputnumber";
 import Listbox from "primevue/listbox";
@@ -11,6 +12,7 @@ import Textarea from 'primevue/textarea'
 import {router, useForm, Link} from "@inertiajs/vue3";
 import {onMounted, ref, watch} from "vue";
 import Markdown from "@/Components/Markdown.vue";
+import {makeHero, destroyHero} from "@/imageManagerComposable.js";
 
 const props = defineProps({
     recipe: {
@@ -33,25 +35,18 @@ const props = defineProps({
         default() {
             return [];
         },
+    },
+    images: {
+        type: [Array, Object],
+        required: false,
+        default() {
+            return [];
+        },
     }
 });
 
 const labelOptions = ref([]);
 const categoryOptions = ref([]);
-
-onMounted(() => {
-    for (const [key, value] of Object.entries(props.recipe)) {
-        form[key] = value;
-    }
-    for (const [key, value] of Object.entries(props.recipe.categories || [])) {
-        form.categoriesSelected.push(value.slug);
-    }
-    for (const [key, value] of Object.entries(props.recipe.labels || [])) {
-        form.labelsSelected.push(value.slug);
-    }
-    labelOptions.value = props.labels;
-    categoryOptions.value = props.categories;
-});
 
 const form = useForm({
     id: null,
@@ -65,6 +60,14 @@ const form = useForm({
     labelsSelected: [],
     categoriesSelected: [],
 });
+
+const onAdvancedUpload = () => {
+    router.reload(({ only: ['images'], preserveScroll: true, }));
+};
+
+const onUploadError = ($event) => {
+    console.log($event);
+};
 
 const save = () => {
     if (form.id) {
@@ -82,6 +85,32 @@ const breadcrumbs = ref([
     { label: 'Recipes', url: route("admin.recipes.index") },
     { label: props.recipe.slug ? `Edit Recipe` : "New Recipe" }
 ]);
+
+const setHero = (id) => {
+    makeHero(id, () => {
+        onAdvancedUpload();
+    })
+}
+
+const deleteHero = (id) => {
+    destroyHero(id, () => {
+        onAdvancedUpload();
+    })
+}
+
+onMounted(() => {
+    for (const [key, value] of Object.entries(props.recipe)) {
+        form[key] = value;
+    }
+    for (const [key, value] of Object.entries(props.recipe.categories || [])) {
+        form.categoriesSelected.push(value.slug);
+    }
+    for (const [key, value] of Object.entries(props.recipe.labels || [])) {
+        form.labelsSelected.push(value.slug);
+    }
+    labelOptions.value = props.labels;
+    categoryOptions.value = props.categories;
+});
 </script>
 
 <template>
@@ -92,8 +121,6 @@ const breadcrumbs = ref([
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <form @submit.prevent="save" class="mb-5">
-                    <Card>
-                        <template #content>
                             <h5 class="text-xl font-bold text-primary-200 mb-3">
                                 {{ props.recipe.slug ? `Edit ${props.recipe.name}` : "New Recipe" }}
                             </h5>
@@ -140,6 +167,46 @@ const breadcrumbs = ref([
                                 </div>
                             </div>
 
+                            <div class="my-7">
+                                <Fieldset legend="Images">
+                                    <div v-if="images.length" class="mb-10 grid grid-cols-4 gap-4">
+                                        <Card v-for="image in images" :key="image.uuid" class="!bg-surface-400">
+                                            <template #header>
+                                                <img :src="image.preview_url" class="object-center object-cover w-full h-32">
+                                            </template>
+                                            <template #body>
+                                            </template>
+                                            <template #footer class="">
+                                                <div class="text-right">
+                                                    <Button v-if="image.collection_name !== 'hero'"
+                                                            @click="setHero(image.id)"
+                                                            v-tooltip.top="'Make Hero'"
+                                                            icon="pi pi-eye" size="small" class="ml-2"></Button>
+                                                    <Button v-else
+                                                            v-tooltip.top="'Current Hero'" severity="info"
+                                                            icon="pi pi-star" size="small" class="ml-2 cursor-not-allowed"></Button>
+                                                    <Button v-if="image.collection_name !== 'hero'"
+                                                            @click="destroyHero(image.id)"
+                                                            v-tooltip.top="'Make Hero'" severity="danger"
+                                                            icon="pi pi-trash" size="small" class="ml-2"></Button>
+                                                </div>
+                                            </template>
+                                        </Card>
+                                    </div>
+                                    <FileUpload name="images[]"
+                                                :url="route('admin.recipes.images.store', {recipe: recipe.slug})"
+                                                @upload="onAdvancedUpload($event)"
+                                                @error="onUploadError($event)"
+                                                :with-credentials="true"
+                                                :multiple="true"
+                                                accept="image/*"
+                                                :maxFileSize="10000000">
+                                        <template #empty>
+                                            <p>Drag and drop files to here to upload.</p>
+                                        </template>
+                                    </FileUpload>
+                                </Fieldset>
+                            </div>
                             <div class="my-7">
                                 <div class="text-xs mb-5">
                                     These all support <a class="text-primary-400" href="https://www.markdownguide.org/cheat-sheet/" target="_new">markdown</a>
@@ -207,14 +274,10 @@ const breadcrumbs = ref([
                                     </Fieldset>
                                 </div>
                             </div>
-                        </template>
-                        <template #footer>
                             <div class="text-right">
                                 <Button type="submit" severity="success" label="Save" class="text-right"
                                         :disabled="form.processing"></Button>
                             </div>
-                        </template>
-                    </Card>
                 </form>
             </div>
         </div>
