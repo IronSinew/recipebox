@@ -49,32 +49,6 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
- * @property string|null $description
- * @property string $path
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
- * @property-read int|null $recipes_count
- * @method static \Database\Factories\ImageFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Image newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Image newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Image query()
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image wherePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
- */
-	class Image extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
- * @property int $id
- * @property string $name
  * @property string $slug
  * @property int $order_column
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -109,6 +83,9 @@ namespace App\Models{
  * @property string $name
  * @property string $slug
  * @property string $serving
+ * @property int $prep_time
+ * @property int $cook_time
+ * @property int $total_time
  * @property string $ingredients
  * @property string $instructions
  * @property string|null $description
@@ -119,15 +96,19 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Category> $categories
  * @property-read int|null $categories_count
- * @property-read \App\Models\Image|null $images
+ * @property-read mixed $hero
+ * @property-read mixed $hero_preview
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Label> $labels
  * @property-read int|null $labels_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
+ * @property-read int|null $media_count
  * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\RecipeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCookTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereDescription($value)
@@ -135,15 +116,17 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereIngredients($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereInstructions($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Recipe wherePrepTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe wherePublishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereServing($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereTotalTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Recipe withoutTrashed()
  */
-	class Recipe extends \Eloquent {}
+	class Recipe extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
 }
 
 namespace App\Models{
