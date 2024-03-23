@@ -15,16 +15,6 @@ Recipebox is a [Laravel Jetstream](https://jetstream.laravel.com)-based site usi
     - You will need to set up [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install) (Ubuntu is known to work) and configure Docker Desktop to use it as a [backend](https://docs.docker.com/desktop/windows/wsl/).
     - All of the following command line commands should be run inside your WSL2 / shell.
 
-## Get the Code and Configure Git
-Get the code.  
-`git clone git@github.com:IronSinew/recipebox.git`  
-`cd recipebox`
-
-Configure Git options for the local repo.  
-`git config core.fileMode false`  
-`git config core.autocrlf input`  
-`git config core.eol lf`
-
 ## Installation
 `cp provision/caddy/Caddyfile.example provision/caddy/Caddyfile`
 
@@ -103,3 +93,4 @@ docker-compose up -d php
 - [ ] Reviews/ratings
 - [x] Roles for access to the recipe manager as a contributor
 - [ ] Associate images to labels/categories (?)
+- [ ] [Recipe schema markup](https://developers.google.com/search/docs/appearance/structured-data/recipe)
