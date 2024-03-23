@@ -6,6 +6,7 @@ use App\Enums\BannerTypeEnum;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +18,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::preventLazyLoading(! app()->isProduction());
         Model::preventAccessingMissingAttributes(! app()->isProduction());
+        if (app()->isProduction()) {
+            URL::forceScheme('https');
+        }
 
         // @codeCoverageIgnoreStart
         if ($this->app->isLocal()) {

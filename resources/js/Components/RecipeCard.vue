@@ -1,6 +1,7 @@
 <script setup>
 import Skeleton from "primevue/skeleton";
 import {Link, router} from "@inertiajs/vue3";
+import pluralize from "pluralize";
 
 defineProps({
     recipe: {
@@ -12,6 +13,16 @@ defineProps({
         default: false,
     }
 });
+
+const humanReadableDuration = (durationInMinutes) => {
+    const hours = Math.floor(durationInMinutes / 60);
+    const minutes = Math.floor(durationInMinutes % 60);
+    const phrases = [];
+    phrases.push((hours > 0) ? `${hours}H` : null)
+    phrases.push((minutes > 0) ? `${minutes}M` : null)
+
+    return phrases.filter(e => e).join(" ");
+}
 </script>
 
 <template>
@@ -54,7 +65,7 @@ defineProps({
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
             </svg>
-            <span class="ml-1">{{ recipe.total_time }} m</span>
+            <span class="ml-1">{{ humanReadableDuration(recipe.total_time) }}</span>
         </div>
         <Link v-if="! skeleton" :href="route('recipe.show', {recipe: recipe.slug})" class="absolute inset-0"></Link>
     </div>

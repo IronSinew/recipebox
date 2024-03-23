@@ -6,6 +6,7 @@ import Galleria from "primevue/galleria";
 import {Link, router} from "@inertiajs/vue3";
 import Markdown from "@/Components/Markdown.vue";
 import {ref} from "vue";
+import pluralize from "pluralize";
 
 const props = defineProps({
     recipe: {
@@ -34,6 +35,17 @@ const imageClick = (index) => {
     mediaIndex.value = index;
     mediaDisplay.value = true;
 };
+
+const humanReadableDuration = (durationInMinutes) => {
+    const hours = Math.floor(durationInMinutes / 60);
+    const minutes = Math.floor(durationInMinutes % 60);
+    const phrases = [];
+
+    phrases.push((hours > 0) ? `${hours} ` + pluralize("hour", hours) : null)
+    phrases.push((minutes > 0) ? `${minutes} ` + pluralize("minute", minutes) : null);
+
+    return phrases.filter(e => e).join(", ");
+}
 </script>
 
 <template>
@@ -54,8 +66,10 @@ const imageClick = (index) => {
                             </div>
                             <div class="lg:col-span-6 lg:col-start-1 lg:row-start-1">
                                 <h2 class="text-2xl text-primary-400">{{ recipe.name }}</h2>
-                                <div>Serving: {{ recipe.serving }}</div>
-                                <h5 class="text-sm mt-2">Last Updated: {{ new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale).format(new Date(recipe.updated_at)) }}</h5>
+                                <h5 class="text-sm mb-5">Last Updated: {{ new Intl.DateTimeFormat(Intl.DateTimeFormat().resolvedOptions().locale).format(new Date(recipe.updated_at)) }}</h5>
+                                <div>Prep: {{ humanReadableDuration(recipe.prep_time) }}</div>
+                                <div>Cook: {{ humanReadableDuration(recipe.cook_time) }}</div>
+                                <div>Servings: {{ recipe.serving }}</div>
                                 <Markdown v-if="recipe.description" :body="recipe.description" class="mt-10"></Markdown>
                                 <Galleria v-model:activeIndex="mediaIndex"
                                           v-model:visible="mediaDisplay"
