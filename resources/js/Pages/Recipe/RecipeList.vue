@@ -33,7 +33,7 @@ const noMoreScrolling = ref(false);
 const isLoading = ref(false);
 
 onMounted(() => {
-    paginationLink.value = props.recipes.next_page_url;
+    paginationLink.value = props.recipes.next_cursor;
 })
 
 useIntersectionObserver(last, ([{ isIntersecting }]) => {
@@ -50,13 +50,13 @@ const onLoadMore = () => {
     }
     isLoading.value = true;
 
-    axios.get(paginationLink.value).then((req) => {
-        if (req.data.next_page_url === null) {
+    axios.get(`${window.location.href}?cursor=${paginationLink.value}`).then((req) => {
+        if (req.data.next_cursor === null) {
             noMoreScrolling.value = true;
         }
 
         recipeList.value = [...recipeList.value, ...req.data.data];
-        paginationLink.value = req.data.next_page_url;
+        paginationLink.value = req.data.next_cursor;
     }).finally(() => {
         isLoading.value = false;
     });
