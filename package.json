@@ -12,6 +12,13 @@
     "@vitejs/plugin-vue": "^5.0.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.4",
+    "bun-types": "latest",
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "latest",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "latest",
     "laravel-vite-plugin": "^1.0",
     "postcss": "^8.4.32",
     "sass": "^1.72.0",
@@ -26,5 +33,10 @@
     "pluralize": "^8.0.0",
     "primeicons": "^6.0.1",
     "primevue": "^3.49.1"
+  },
+  "name": "recipebox",
+  "module": "index.ts",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }

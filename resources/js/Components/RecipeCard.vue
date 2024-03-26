@@ -40,7 +40,7 @@ const humanReadableDuration = (durationInMinutes) => {
     <div v-else class="recipe-card transition ease-in-out hover:scale-110 relative">
         <img
             :src="recipe.hero_preview ? recipe.hero_preview : 'https://placehold.co/350x200?text=No+Image+yet'"
-            alt="stew"
+            :alt="recipe.name"
             class="w-full h-32 sm:h-48 object-cover"
         />
         <div class="m-4">
