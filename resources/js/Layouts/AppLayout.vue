@@ -66,6 +66,10 @@ onMounted(() => {
                 {
                     label: 'Recipes',
                     route: 'admin.recipes.index'
+                },
+                {
+                    label: 'Users',
+                    route: 'admin.users.index'
                 }
             ],
         })
