@@ -23,7 +23,7 @@ const props = defineProps({
 
 watch(() => props.recipes, (data, prevData) => {
     paginationLink.value = data.recipes.next_cursor;
-    recipeList.value = data.recipes;
+    recipeList.value = data.recipes.data;
 });
 
 const paginationLink = ref(null);
@@ -34,6 +34,7 @@ const isLoading = ref(false);
 
 onMounted(() => {
     paginationLink.value = props.recipes.next_cursor;
+    recipeList.value = props.recipes.data;
 })
 
 useIntersectionObserver(last, ([{ isIntersecting }]) => {
