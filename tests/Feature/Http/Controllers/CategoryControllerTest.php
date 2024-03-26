@@ -38,8 +38,8 @@ final class CategoryControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertInertia(fn (Assert $page) => $page
-            ->component('Category/CategoryShow')
-            ->where('category.name', $randomCategory->name)
+            ->component('Recipe/RecipeList')
+            ->where('label.name', $randomCategory->name)
         );
     }
 }

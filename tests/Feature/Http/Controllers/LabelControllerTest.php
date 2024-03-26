@@ -39,7 +39,7 @@ final class LabelControllerTest extends TestCase
 
         $response->assertOk();
         $response->assertInertia(fn (Assert $page) => $page
-            ->component('Label/LabelShow')
+            ->component('Recipe/RecipeList')
             ->where('label.name', $randomLabel->name)
         );
     }

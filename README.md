@@ -87,7 +87,7 @@ docker-compose up -d php
 ### Other
 - [ ] Customizable intro blurb and logo
 - [x] Recent recipes on homepage
-- [ ] Infinite scroll for recipe lists
+- [x] Infinite scroll for recipe lists
 ### Possible future features
 - [ ] "I made it" counter
 - [ ] Reviews/ratings
