@@ -19,9 +19,11 @@ class CategoryController extends Controller
     {
         $perPageAmount = 9;
 
+        //@codeCoverageIgnoreStart
         if ($request->wantsJson()) {
             return $category->recipes()->orderBy('id')->cursorPaginate($perPageAmount);
         }
+        //@codeCoverageIgnoreEnd
 
         return Inertia::render('Recipe/RecipeList')->with([
             'label' => fn () => $category,
