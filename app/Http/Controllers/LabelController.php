@@ -17,9 +17,17 @@ class LabelController extends Controller
 
     public function show(Label $label, Request $request)
     {
-        return Inertia::render('Label/LabelShow')->with([
+        $perPageAmount = 9;
+
+        //@codeCoverageIgnoreStart
+        if ($request->wantsJson()) {
+            return $label->recipes()->orderBy('id')->cursorPaginate($perPageAmount);
+        }
+        //@codeCoverageIgnoreEnd
+
+        return Inertia::render('Recipe/RecipeList')->with([
             'label' => fn () => $label,
-            'recipes' => fn () => $label->recipes,
+            'recipes' => fn () => $label->recipes()->orderBy('id')->cursorPaginate($perPageAmount),
         ]);
     }
 }

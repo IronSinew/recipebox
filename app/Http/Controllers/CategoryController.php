@@ -17,9 +17,17 @@ class CategoryController extends Controller
 
     public function show(Category $category, Request $request)
     {
-        return Inertia::render('Category/CategoryShow')->with([
-            'category' => fn () => $category,
-            'recipes' => fn () => $category->recipes,
+        $perPageAmount = 9;
+
+        //@codeCoverageIgnoreStart
+        if ($request->wantsJson()) {
+            return $category->recipes()->orderBy('id')->cursorPaginate($perPageAmount);
+        }
+        //@codeCoverageIgnoreEnd
+
+        return Inertia::render('Recipe/RecipeList')->with([
+            'label' => fn () => $category,
+            'recipes' => fn () => $category->recipes()->orderBy('id')->cursorPaginate($perPageAmount),
         ]);
     }
 }
