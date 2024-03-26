@@ -18,9 +18,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::preventLazyLoading(! app()->isProduction());
         Model::preventAccessingMissingAttributes(! app()->isProduction());
+
+        //@codeCoverageIgnoreStart
         if (app()->isProduction()) {
             URL::forceScheme('https');
         }
+        //@codeCoverageIgnoreEnd
 
         // @codeCoverageIgnoreStart
         if ($this->app->isLocal()) {

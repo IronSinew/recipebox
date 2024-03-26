@@ -50,3 +50,4 @@ cert.pem
 /.blueprint
 /.editorconfig
 /storage/media-library/*
+/.run

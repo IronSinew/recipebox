@@ -12,7 +12,14 @@ import {router, useForm, Link} from "@inertiajs/vue3";
 import {onMounted, ref, watch} from "vue";
 
 const props = defineProps({
-    recipes: {
+    users: {
+        type: [Array, Object],
+        required: false,
+        default() {
+            return [];
+        },
+    },
+    roles: {
         type: [Array, Object],
         required: false,
         default() {
@@ -21,18 +28,18 @@ const props = defineProps({
     }
 });
 
-watch(() => props.recipes, (data, prevData) => {
+watch(() => props.users, (data, prevData) => {
     tableData.value = data;
 });
 
 onMounted(() => {
-    tableData.value = props.recipes;
+    tableData.value = props.users;
 });
 
 const tableData = ref();
 
 const reloadTableData = () => {
-    router.reload({ only: ['recipes'], preserveScroll: true, })
+    router.reload({ only: ['users'], preserveScroll: true, })
 }
 
 const form = useForm({
@@ -42,12 +49,12 @@ const form = useForm({
 const confirm = useConfirm();
 const deleteRowData = (data) => {
     confirm.require({
-        message: "Are you sure you want to delete this recipe?",
-        header: `Recipe: ${data.name}`,
+        message: "Are you sure you want to delete this user? This is permanent!",
+        header: `User: ${data.name}`,
         icon: "pi pi-exclamation-triangle",
         accept: () => {
-            router.delete(route("admin.recipes.destroy", {
-                recipe: data.slug,
+            router.delete(route("admin.users.destroy", {
+                user: data.id,
             }), {
                 preserveScroll: true,
                 onFinish: () => {
@@ -57,59 +64,44 @@ const deleteRowData = (data) => {
         }
     });
 };
-
-const restoreRowData = (data) => {
-    router.put(route("admin.recipes.restore", {
-            recipe: data.slug,
-        }), {
-            preserveScroll: true,
-            onFinish: () => {
-                reloadTableData();
-            }
-        })
-};
 </script>
 
 <template>
-    <AppLayout title="Recipe Admin">
+    <AppLayout title="User Admin">
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex flex-row mb-5">
-                    <h1 class="text-5xl font-extrabold dark:text-white grow">Recipe Admin</h1>
-                    <Link :href="route('admin.recipes.create')">
+                    <h1 class="text-5xl font-extrabold dark:text-white grow">User Admin</h1>
+                    <Link :href="route('admin.users.create')">
                         <Button label="Add New"></Button>
                     </Link>
                 </div>
                 <DataTable :value="tableData" tableStyle="min-width: 50rem" striped-rows>
                     <Column header="Name" class="text-surface-700 dark:text-white/70">
                         <template #body="{ data }">
-                            <Link :href="route('admin.recipes.edit', {recipe: data.slug})">
+                            <Link :href="route('admin.users.edit', {user: data.id})">
                                 {{ data.name }}
                             </Link>
                         </template>
                     </Column>
-                    <Column header="Labels" class="">
+                    <Column header="Email" class="text-surface-700 dark:text-white/70">
                         <template #body="{ data }">
-                            <Chip v-for="label in data.labels" :label="label.name" class="mr-2"></Chip>
+                            {{ data.email }}
                         </template>
                     </Column>
-                    <Column header="Categories" class="">
+                    <Column header="Recipe #" class="text-surface-700 dark:text-white/70">
                         <template #body="{ data }">
-                            <Chip v-for="category in data.categories" :label="category.name" class="mr-2"></Chip>
+                            {{ data.recipes_count }}
+                        </template>
+                    </Column>
+                    <Column header="Role" class="text-surface-700 dark:text-white/70">
+                        <template #body="{ data }">
+                            {{ data.role }}
                         </template>
                     </Column>
                     <Column header="" class="text-right">
                         <template #body="{ data }">
-                            <Link :href="route('recipe.show', {recipe: data.slug})">
-                                <Button
-                                    severity="info"
-                                    size="small"
-                                    v-tooltip.top="'View'"
-                                >
-                                    <i class="pi pi-eye"></i>
-                                </Button>
-                            </Link>
-                            <Link :href="route('admin.recipes.edit', {recipe: data.slug})">
+                            <Link :href="route('admin.users.edit', {user: data.id})">
                                 <Button
                                     severity="help"
                                     size="small"
@@ -120,7 +112,6 @@ const restoreRowData = (data) => {
                                 </Button>
                             </Link>
                             <Button
-                                v-if="! data.deleted_at"
                                 @click="deleteRowData(data)"
                                 severity="danger"
                                 size="small"
@@ -128,16 +119,6 @@ const restoreRowData = (data) => {
                                 v-tooltip.top="'Delete'"
                             >
                                 <i class="pi pi-trash"></i>
-                            </Button>
-                            <Button
-                                v-else
-                                @click="restoreRowData(data)"
-                                severity="success"
-                                size="small"
-                                class="ml-3"
-                                v-tooltip.top="'Restore'"
-                            >
-                                <i class="pi pi-replay"></i>
                             </Button>
                         </template>
                     </Column>

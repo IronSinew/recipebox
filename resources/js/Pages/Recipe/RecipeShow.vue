@@ -82,7 +82,7 @@ const humanReadableDuration = (durationInMinutes) => {
                                           class="w-full max-h-64"
                                 >
                                     <template #item="slotProps">
-                                        <img :src="slotProps.item.original_url" alt="" class="w-full cursor-pointer" @click="mediaDisplay = false;" />
+                                        <img :src="slotProps.item.original_url" alt="" class="w-full cursor-pointer max-w-7xl" @click="mediaDisplay = false;" />
                                     </template>
                                     <template #thumbnail="slotProps">
                                         <img :src="slotProps.item.preview_url" alt="" class="" />

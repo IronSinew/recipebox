@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\LabelController as AdminLabelController;
 use App\Http\Controllers\Admin\RecipeController as AdminRecipeController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryListController;
 use App\Http\Controllers\HomeController;
@@ -50,6 +51,9 @@ Route::prefix('/admin')->name('admin.')->middleware([
                 ->withTrashed()
                 ->name('categories.restore');
             Route::resource('categories', AdminCategoryController::class)->except('show', 'create');
+
+            // users
+            Route::resource('users', UserController::class)->except('show');
         });
 
         /**

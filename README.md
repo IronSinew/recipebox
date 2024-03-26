@@ -83,7 +83,7 @@ docker-compose up -d php
 - [x] Recipe Manager
 - [x] Image uploads
 - [ ] Paginate Recipe Manager
-- [ ] User Management
+- [x] User Management
 ### Other
 - [ ] Customizable intro blurb and logo
 - [x] Recent recipes on homepage

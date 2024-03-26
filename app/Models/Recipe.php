@@ -106,6 +106,9 @@ class Recipe extends Model implements HasMedia
         return $this->belongsToMany(Category::class)->orderBy((new Category)->determineOrderColumnName());
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
