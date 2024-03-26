@@ -3,7 +3,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "lint-fix": "bun run lint-js-fix && bun run lint-vue-fix",
+    "lint-js": "node_modules/.bin/eslint --ext .js ./resources/js",
+    "lint-js-fix": "node_modules/.bin/eslint ./resources/js --ext .js --fix",
+    "lint-vue": "node_modules/.bin/eslint --ext .vue ./resources/js",
+    "lint-vue-fix": "node_modules/.bin/eslint ./resources/js --ext .vue --fix"
   },
   "devDependencies": {
     "@inertiajs/vue3": "^1.0.14",
@@ -12,6 +17,13 @@
     "@vitejs/plugin-vue": "^5.0.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.4",
+    "bun-types": "latest",
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "latest",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "latest",
     "laravel-vite-plugin": "^1.0",
     "postcss": "^8.4.32",
     "sass": "^1.72.0",
@@ -22,9 +34,19 @@
   "dependencies": {
     "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-simple-import-sort": "^12.0.0",
     "marked": "^12.0.1",
     "pluralize": "^8.0.0",
+    "prettier": "^3.2.5",
+    "prettier-eslint": "^16.3.0",
     "primeicons": "^6.0.1",
     "primevue": "^3.49.1"
+  },
+  "name": "recipebox",
+  "module": "index.ts",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
   }
 }
