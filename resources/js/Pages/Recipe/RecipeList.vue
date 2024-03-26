@@ -34,6 +34,9 @@ const isLoading = ref(false);
 
 onMounted(() => {
     paginationLink.value = props.recipes.next_cursor;
+    if (paginationLink.value === null) {
+        noMoreScrolling.value = true;
+    }
     recipeList.value = props.recipes.data;
 })
 
