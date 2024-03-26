@@ -1,17 +1,17 @@
 <script setup>
-import {computed} from "vue";
-import {marked} from "marked";
+import { marked } from "marked";
+import { computed } from "vue";
 
 const props = defineProps({
-    body: {type: [String, null], required: false, default: ""}
+    body: { type: [String, null], required: false, default: "" },
 });
 
-const markdownToHtml = computed(() => marked.parse(props.body || "") )
+const markdownToHtml = computed(() => marked.parse(props.body || ""));
 </script>
 
 <template>
     <div class="markdown-container">
-        <div v-html="markdownToHtml"></div>
+        <div v-html="markdownToHtml" />
     </div>
 </template>
 
@@ -21,7 +21,11 @@ const markdownToHtml = computed(() => marked.parse(props.body || "") )
         @apply mb-2;
     }
 
-    &:deep(h1), &:deep(h2), &:deep(h3), &:deep(h4), &:deep(h5) {
+    &:deep(h1),
+    &:deep(h2),
+    &:deep(h3),
+    &:deep(h4),
+    &:deep(h5) {
         @apply mb-3;
     }
 

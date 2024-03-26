@@ -1,45 +1,51 @@
 <script setup>
+import { Link } from "@inertiajs/vue3";
 import Skeleton from "primevue/skeleton";
-import {Link, router} from "@inertiajs/vue3";
-import pluralize from "pluralize";
 
 defineProps({
     recipe: {
         type: [Array, Object],
-        default: {},
+        default: () => {},
     },
     skeleton: {
         type: Boolean,
-        default: false,
-    }
+        default: () => false,
+    },
 });
 
 const humanReadableDuration = (durationInMinutes) => {
     const hours = Math.floor(durationInMinutes / 60);
     const minutes = Math.floor(durationInMinutes % 60);
     const phrases = [];
-    phrases.push((hours > 0) ? `${hours}H` : null)
-    phrases.push((minutes > 0) ? `${minutes}M` : null)
+    phrases.push(hours > 0 ? `${hours}H` : null);
+    phrases.push(minutes > 0 ? `${minutes}M` : null);
 
-    return phrases.filter(e => e).join(" ");
-}
+    return phrases.filter((e) => e).join(" ");
+};
 </script>
 
 <template>
     <div v-if="skeleton" class="recipe-card skeleton relative">
-        <Skeleton height="200px" width="100%"></Skeleton>
+        <Skeleton height="200px" width="100%" />
         <div class="m-4">
             <p class="mb-2">
-                <Skeleton width="100%" height="2rem"></Skeleton>
+                <Skeleton width="100%" height="2rem" />
             </p>
             <p>
-                <Skeleton width="100%" height="1rem"></Skeleton>
+                <Skeleton width="100%" height="1rem" />
             </p>
         </div>
     </div>
-    <div v-else class="recipe-card transition ease-in-out hover:scale-110 relative">
+    <div
+        v-else
+        class="recipe-card transition ease-in-out hover:scale-110 relative"
+    >
         <img
-            :src="recipe.hero_preview ? recipe.hero_preview : 'https://placehold.co/350x200?text=No+Image+yet'"
+            :src="
+                recipe.hero_preview
+                    ? recipe.hero_preview
+                    : 'https://placehold.co/350x200?text=No+Image+yet'
+            "
             :alt="recipe.name"
             class="w-full h-32 sm:h-48 object-cover"
         />
@@ -47,7 +53,7 @@ const humanReadableDuration = (durationInMinutes) => {
             <span class="font-bold">{{ recipe.name }}</span>
             <span class="block text-sm mt-1">
                 Servings:
-                {{ recipe.serving}}
+                {{ recipe.serving }}
             </span>
         </div>
         <div class="badge">
@@ -65,9 +71,15 @@ const humanReadableDuration = (durationInMinutes) => {
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
             </svg>
-            <span class="ml-1">{{ humanReadableDuration(recipe.total_time) }}</span>
+            <span class="ml-1">{{
+                humanReadableDuration(recipe.total_time)
+            }}</span>
         </div>
-        <Link v-if="! skeleton" :href="route('recipe.show', {recipe: recipe.slug})" class="absolute inset-0"></Link>
+        <Link
+            v-if="!skeleton"
+            :href="route('recipe.show', { recipe: recipe.slug })"
+            class="absolute inset-0"
+        />
     </div>
 </template>
 <style lang="scss">
@@ -78,7 +90,8 @@ const humanReadableDuration = (durationInMinutes) => {
     border-radius: 0.25rem;
     overflow: hidden;
     position: relative;
-    --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .badge {
