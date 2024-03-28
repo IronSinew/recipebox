@@ -103,10 +103,10 @@ onMounted(() => {
     for (const [key, value] of Object.entries(props.recipe)) {
         form[key] = value;
     }
-    for (const [value] of Object.entries(props.recipe.categories || [])) {
+    for (const [_, value] of Object.entries(props.recipe.categories || [])) {
         form.categoriesSelected.push(value.slug);
     }
-    for (const [value] of Object.entries(props.recipe.labels || [])) {
+    for (const [_, value] of Object.entries(props.recipe.labels || [])) {
         form.labelsSelected.push(value.slug);
     }
     labelOptions.value = props.labels;
@@ -211,12 +211,9 @@ onMounted(() => {
                         </div>
                     </div>
 
-                    <div class="my-7">
+                    <div v-if="images.length && recipe.id" class="my-7">
                         <Fieldset legend="Images">
-                            <div
-                                v-if="images.length"
-                                class="mb-10 grid grid-cols-4 gap-4"
-                            >
+                            <div class="mb-10 grid grid-cols-4 gap-4">
                                 <Card
                                     v-for="image in images"
                                     :key="image.uuid"
