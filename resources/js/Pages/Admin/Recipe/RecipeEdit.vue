@@ -211,7 +211,7 @@ onMounted(() => {
                         </div>
                     </div>
 
-                    <div v-if="images.length && recipe.id" class="my-7">
+                    <div v-if="recipe.id" class="my-7">
                         <Fieldset legend="Images">
                             <div class="mb-10 grid grid-cols-4 gap-4">
                                 <Card
