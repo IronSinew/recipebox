@@ -15,19 +15,19 @@
         @if (! app()->environment("testing"))
             @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @endif
-        @if (app()->isProduction())
-            <!-- Google tag (gtag.js) -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-6YETG6FWY6"></script>
-            <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('config', 'G-6YETG6FWY6');
-            </script>
-        @endif
         @inertiaHead
     </head>
+    @if (app()->isProduction())
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6YETG6FWY6"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-6YETG6FWY6');
+        </script>
+    @endif
     <body class="font-sans antialiased">
         @inertia
     </body>
