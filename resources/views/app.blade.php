@@ -15,7 +15,7 @@
         @if (! app()->environment("testing"))
             @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @endif
-        @if (! app()->isProduction())
+        @if (app()->isProduction())
             <!-- Google tag (gtag.js) -->
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-6YETG6FWY6"></script>
             <script>
