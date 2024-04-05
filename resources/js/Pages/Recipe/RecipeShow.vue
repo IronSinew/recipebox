@@ -138,19 +138,19 @@ const humanReadableDuration = (durationInMinutes) => {
                                 </Galleria>
                                 <div
                                     v-if="recipe.media"
-                                    class="flex flex-wrap w-full"
+                                    class="flex flex-wrap w-full mt-5"
                                 >
-                                    <div
-                                        v-for="(image, index) of recipe.media"
-                                        :key="index"
-                                        class="pr-3"
-                                    >
-                                        <img
-                                            :src="image.preview_url"
-                                            class="cursor-pointer max-h-32"
-                                            alt=""
-                                            @click="imageClick(index)"
-                                        />
+                                    <div class="gallery-container mx-auto">
+                                        <div class="gallery">
+                                                <img
+                                                    v-for="(image, index) of recipe.media"
+                                                    :key="index"
+                                                    :src="image.preview_url"
+                                                    class="cursor-pointer"
+                                                    alt=""
+                                                    @click="imageClick(index)"
+                                                />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -206,3 +206,52 @@ const humanReadableDuration = (durationInMinutes) => {
         </div>
     </AppLayout>
 </template>
+<style lang="scss">
+@media (width >= 720px) {
+    .gallery-container {
+        display: grid;
+        place-items: center;
+        min-height: 1vh;
+    }
+    .gallery {
+        --size: 100px;
+        display: grid;
+        grid-template-columns: repeat(6, var(--size));
+        grid-auto-rows: var(--size);
+        margin-bottom: var(--size);
+        place-items: start center;
+        gap: 5px;
+
+        &:has(:hover) img:not(:hover),
+        &:has(:focus) img:not(:focus){
+            filter: brightness(0.5) contrast(0.5);
+        }
+
+        & img {
+            object-fit: cover;
+            width: calc(var(--size) * 2);
+            height: calc(var(--size) * 2);
+            clip-path: path("M90,10 C100,0 100,0 110,10 190,90 190,90 190,90 200,100 200,100 190,110 190,110 110,190 110,190 100,200 100,200 90,190 90,190 10,110 10,110 0,100 0,100 10,90Z");
+            transition: clip-path 0.25s, filter 0.75s;
+            grid-column: auto / span 2;
+            border-radius: 5px;
+
+            &:nth-child(5n - 1) {
+                grid-column: 2 / span 2
+            }
+
+            &:hover,
+            &:focus {
+                clip-path: path("M0,0 C0,0 200,0 200,0 200,0 200,100 200,100 200,100 200,200 200,200 200,200 100,200 100,200 100,200 100,200 0,200 0,200 0,100 0,100 0,100 0,100 0,100Z");
+                z-index: 1;
+                transition: clip-path 0.25s, filter 0.25s;
+            }
+
+            &:focus {
+                outline: 1px dashed black;
+                outline-offset: -5px;
+            }
+        }
+    }
+}
+</style>
