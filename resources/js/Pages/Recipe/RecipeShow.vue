@@ -118,6 +118,7 @@ const humanReadableDuration = (durationInMinutes) => {
                                     :circular="true"
                                     :full-screen="true"
                                     :show-thumbnails="false"
+                                    :show-item-navigators="true"
                                     class="w-full max-h-64"
                                 >
                                     <template #item="slotProps">
