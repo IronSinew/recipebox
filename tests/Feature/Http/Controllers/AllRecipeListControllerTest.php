@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\RecipeController
+ * @see \App\Http\Controllers\AllRecipeListController
  */
 final class AllRecipeListControllerTest extends TestCase
 {
