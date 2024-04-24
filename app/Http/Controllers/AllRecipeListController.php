@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recipe;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class AllRecipeListController extends Controller
 {
@@ -19,7 +19,7 @@ class AllRecipeListController extends Controller
         //@codeCoverageIgnoreEnd
 
         return Inertia::render('Recipe/RecipeList')->with([
-            'label' => fn () => collect(["name" => "All Recipes"]),
+            'label' => fn () => collect(['name' => 'All Recipes']),
             'recipes' => fn () => Recipe::orderBy('id')->cursorPaginate($perPageAmount),
         ]);
     }
