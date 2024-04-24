@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\LabelController as AdminLabelController;
 use App\Http\Controllers\Admin\RecipeController as AdminRecipeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AllRecipeListController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CategoryListController;
 use App\Http\Controllers\HomeController;
@@ -26,6 +27,7 @@ Route::prefix('/categories')->name('category.')->group(function () {
 Route::get('/labels', [LabelController::class, 'index'])->name('label.index');
 Route::get('/labels/{label}', [LabelController::class, 'show'])->name('label.show');
 
+Route::get('/recipes', AllRecipeListController::class)->name('recipe.all');
 Route::get('/recipe/{recipe}', RecipeController::class)->name('recipe.show');
 Route::post('/search-simple', SearchSimpleController::class)->name('search.simple');
 

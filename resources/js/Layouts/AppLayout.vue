@@ -35,6 +35,11 @@ const menuItems = ref([
         icon: "pi pi-envelope",
         route: "label.index",
     },
+    {
+        label: "All Recipes",
+        icon: "pi pi-list",
+        route: "recipe.all",
+    }
 ]);
 
 onMounted(() => {
