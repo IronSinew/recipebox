@@ -4,12 +4,12 @@ import pluralize from "pluralize";
 import Card from "primevue/card";
 import Chip from "primevue/chip";
 import Galleria from "primevue/galleria";
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 import Markdown from "@/Components/Markdown.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
-defineProps({
+const props = defineProps({
     recipe: {
         type: [Array, Object],
         required: false,
@@ -49,6 +49,47 @@ const humanReadableDuration = (durationInMinutes) => {
 
     return phrases.filter((e) => e).join(", ");
 };
+
+const MinutesToDuration = (s) => {
+    const days = Math.floor(s / 1440);
+    s = s - days * 1440;
+    const hours = Math.floor(s / 60);
+    s = s - hours * 60;
+
+    let dur = "PT";
+    if (days > 0) {
+        dur += days + "D";
+    }
+    if (hours > 0) {
+        dur += hours + "H";
+    }
+    dur += s + "M";
+
+    return dur;
+};
+
+const recipeMarkup = ref({
+    "@context": "https://schema.org/",
+    "@type": "Recipe",
+    name: props.recipe.name,
+    recipeYield: props.recipe.serving,
+    prepTime: MinutesToDuration(props.recipe.prep_time),
+    cookTime: MinutesToDuration(props.recipe.cook_time),
+    totalTime: MinutesToDuration(props.recipe.total_time),
+});
+
+onMounted(() => {
+    const script = document.createElement("script");
+    script.setAttribute("type", "application/ld+json");
+    script.setAttribute("id", "recipe-markup");
+    script.textContent = JSON.stringify(recipeMarkup.value);
+    document.head.appendChild(script);
+});
+
+onUnmounted(() => {
+    const element = document.getElementById("recipe-markup");
+    element?.parentNode?.removeChild(element);
+});
 </script>
 
 <template>
@@ -143,14 +184,16 @@ const humanReadableDuration = (durationInMinutes) => {
                                 >
                                     <div class="gallery-container mx-auto">
                                         <div class="gallery">
-                                                <img
-                                                    v-for="(image, index) of recipe.media"
-                                                    :key="index"
-                                                    :src="image.preview_url"
-                                                    class="cursor-pointer"
-                                                    alt=""
-                                                    @click="imageClick(index)"
-                                                />
+                                            <img
+                                                v-for="(
+                                                    image, index
+                                                ) of recipe.media"
+                                                :key="index"
+                                                :src="image.preview_url"
+                                                class="cursor-pointer"
+                                                alt=""
+                                                @click="imageClick(index)"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -224,7 +267,7 @@ const humanReadableDuration = (durationInMinutes) => {
         gap: 5px;
 
         &:has(:hover) img:not(:hover),
-        &:has(:focus) img:not(:focus){
+        &:has(:focus) img:not(:focus) {
             filter: brightness(0.5) contrast(0.5);
         }
 
@@ -232,20 +275,28 @@ const humanReadableDuration = (durationInMinutes) => {
             object-fit: cover;
             width: calc(var(--size) * 2);
             height: calc(var(--size) * 2);
-            clip-path: path("M90,10 C100,0 100,0 110,10 190,90 190,90 190,90 200,100 200,100 190,110 190,110 110,190 110,190 100,200 100,200 90,190 90,190 10,110 10,110 0,100 0,100 10,90Z");
-            transition: clip-path 0.25s, filter 0.75s;
+            clip-path: path(
+                "M90,10 C100,0 100,0 110,10 190,90 190,90 190,90 200,100 200,100 190,110 190,110 110,190 110,190 100,200 100,200 90,190 90,190 10,110 10,110 0,100 0,100 10,90Z"
+            );
+            transition:
+                clip-path 0.25s,
+                filter 0.75s;
             grid-column: auto / span 2;
             border-radius: 5px;
 
             &:nth-child(5n - 1) {
-                grid-column: 2 / span 2
+                grid-column: 2 / span 2;
             }
 
             &:hover,
             &:focus {
-                clip-path: path("M0,0 C0,0 200,0 200,0 200,0 200,100 200,100 200,100 200,200 200,200 200,200 100,200 100,200 100,200 100,200 0,200 0,200 0,100 0,100 0,100 0,100 0,100Z");
+                clip-path: path(
+                    "M0,0 C0,0 200,0 200,0 200,0 200,100 200,100 200,100 200,200 200,200 200,200 100,200 100,200 100,200 100,200 0,200 0,200 0,100 0,100 0,100 0,100 0,100Z"
+                );
                 z-index: 1;
-                transition: clip-path 0.25s, filter 0.25s;
+                transition:
+                    clip-path 0.25s,
+                    filter 0.25s;
             }
 
             &:focus {
