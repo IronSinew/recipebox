@@ -77,8 +77,8 @@ const recipeMarkup = ref({
     cookTime: MinutesToDuration(props.recipe.cook_time),
     totalTime: MinutesToDuration(props.recipe.total_time),
     image: [
-        props.recipe.hero_preview
-            ? props.recipe.hero_preview
+        props.recipe.hero
+            ? props.recipe.hero
             : "https://placehold.co/350x200?text=No+Image+yet",
     ],
 });
