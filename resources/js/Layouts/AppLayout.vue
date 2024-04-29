@@ -39,7 +39,7 @@ const menuItems = ref([
         label: "All Recipes",
         icon: "pi pi-list",
         route: "recipe.all",
-    }
+    },
 ]);
 
 onMounted(() => {
