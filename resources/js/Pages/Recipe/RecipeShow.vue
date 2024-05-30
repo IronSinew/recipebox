@@ -216,7 +216,7 @@ onUnmounted(() => {
                   d="M77.9 30h-4.6v13.8H27.2V30h-4.6c-4.6 0-9.2 4.6-9.2 9.2v23.1c0 4.6 4.6 9.2 9.2 9.2h4.6V57.7h46.1v13.8h4.6c4.6 0 9.2-4.6 9.2-9.2V39.2c.1-4.6-4.5-9.2-9.2-9.2z"
                 ></path>
               </svg>
-              <p>Print Recipe</p>
+              <p class="text-white">Print Recipe</p>
             </a>
           </div>
         </div>
