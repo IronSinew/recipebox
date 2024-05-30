@@ -5,71 +5,85 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    /* @apply text-surface-700 dark:text-white/70; */
+  :root {
+    --primary-50: 255 247 237;
+    --primary-100: 255 237 213;
+    --primary-200: 254 215 170;
+    --primary-300: 253 186 116;
+    --primary-400: 251 146 60;
+    --primary-500: 249 115 22;
+    --primary-600: 234 88 12;
+    --primary-700: 194 65 12;
+    --primary-800: 154 52 18;
+    --primary-900: 124 45 18;
+    --primary-950: 67 20 7;
+
+    --surface-0: 255 255 255;
+    --surface-50: 249 250 251;
+    --surface-100: 243 244 246;
+    --surface-200: 229 231 235;
+    --surface-300: 209 213 219;
+    --surface-400: 156 163 175;
+    --surface-500: 107 114 128;
+    --surface-600: 75 85 99;
+    --surface-800: 31 41 55;
+    --surface-900: 45 53 71;
+    --surface-950: 8 8 8;
+
+    --main-dark: 45 53 71;
+    --main-orange: 228 109 37;
   }
 
-  h1,
-  h2,
-  h3 {
-    font-family: "Merienda", cursive;
-  }
-
-  h1 {
-    @apply text-4xl text-main-dark;
-    font-weight: 900;
-  }
-  h2 {
-    @apply text-3xl text-main-dark;
-    font-weight: 900;
-  }
-  h3 {
-    @apply text-2xl text-main-dark;
-  }
-  h4 {
-    @apply text-xl text-main-dark;
-  }
-  h5 {
-    @apply text-lg text-main-dark;
-  }
-  ul {
-    list-style: inside;
-  }
-
-  ol {
-    list-style: decimal;
-    @apply ml-4;
+  .dark {
+    --main-dark: 255 255 255;
   }
 }
 
-:root {
-  --primary-50: 255 247 237;
-  --primary-100: 255 237 213;
-  --primary-200: 254 215 170;
-  --primary-300: 253 186 116;
-  --primary-400: 251 146 60;
-  --primary-500: 249 115 22;
-  --primary-600: 234 88 12;
-  --primary-700: 194 65 12;
-  --primary-800: 154 52 18;
-  --primary-900: 124 45 18;
-  --primary-950: 67 20 7;
+body {
+  /* @apply text-surface-700 dark:text-white/70; */
+  @apply bg-white dark:bg-[#1F1D2B] text-main-dark dark:text-white;
+}
 
-  --surface-0: 255 255 255;
-  --surface-50: 249 250 251;
-  --surface-100: 243 244 246;
-  --surface-200: 229 231 235;
-  --surface-300: 209 213 219;
-  --surface-400: 156 163 175;
-  --surface-500: 107 114 128;
-  --surface-600: 75 85 99;
-  --surface-700: 55 65 81;
-  --surface-800: 31 41 55;
-  --surface-900: 17 24 39;
-  --surface-950: 8 8 8;
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a {
+  @apply text-main-dark dark:text-white;
+}
 
-  --main-dark: 45 53 71;
-  --main-orange: 228 109 37;
+h1,
+h2,
+h3 {
+  font-family: "Merienda", cursive;
+}
+
+h1 {
+  @apply text-4xl;
+  font-weight: 900;
+}
+h2 {
+  @apply text-2xl sm:text-3xl;
+  font-weight: 900;
+}
+h3 {
+  @apply text-2xl;
+}
+h4 {
+  @apply text-xl;
+}
+h5 {
+  @apply text-lg;
+}
+ul {
+  list-style: inside;
+}
+
+ol {
+  list-style: decimal;
+  @apply ml-4;
 }
 
 [x-cloak] {
@@ -83,4 +97,30 @@
   position: relative;
   --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.angled-recipe-header {
+  overflow: hidden;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  @apply 2xl:max-h-[600px];
+}
+
+.angled-recipe-header img {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+}
+
+.autocomplete-search {
+  input {
+    @apply bg-white border border-surface-300;
+  }
+}
+
+#recipe-card-view {
+  @apply !bg-black/[0.2];
+}
+
+button {
+  @apply !text-main-dark dark:!text-white;
 }
