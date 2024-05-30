@@ -118,7 +118,7 @@ ol {
 }
 
 #recipe-card-view {
-  @apply !bg-black/[0.2];
+  @apply dark:!bg-black/[0.2];
 }
 
 button {
