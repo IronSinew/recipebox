@@ -3,7 +3,7 @@ import { Link } from "@inertiajs/vue3";
 import Skeleton from "primevue/skeleton";
 
 defineProps({
-  category: {
+  label: {
     type: [Array, Object],
     default: () => {},
   },
@@ -32,21 +32,19 @@ defineProps({
   >
     <img
       :src="
-        category.hero_preview
-          ? category.hero_preview
-          : '/assets/no-category-img.png'
+        label.hero_preview ? label.hero_preview : '/assets/no-label-img.png'
       "
-      :alt="category.name"
+      :alt="label.name"
       class="w-full h-32 sm:h-48 object-cover"
     />
     <div class="flex justify-between items-center my-4">
-      <span class="font-bold">{{ category.name }}</span>
+      <span class="font-bold">{{ label.name }}</span>
       <slot name="link"></slot>
     </div>
 
     <Link
       v-if="!skeleton"
-      :href="route('category.show', { category: category.slug })"
+      :href="route('label.show', { label: label.slug })"
       class="absolute inset-0"
     />
   </div>

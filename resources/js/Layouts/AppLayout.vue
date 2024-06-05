@@ -117,10 +117,8 @@ const logout = () => {
                   :href="route(item.route, item.routeObject || null)"
                   v-bind="props.action"
                   :class="{
-                    'dark:bg-gray-800': route().current(
-                      item.route,
-                      item.routeObject || null,
-                    ),
+                    'bg-gray-100 mx-2 dark:bg-surface-600/80 rounded-lg':
+                      route().current(item.route, item.routeObject || null),
                   }"
                 >
                   <!-- <span :class="item.icon" /> -->
@@ -133,10 +131,8 @@ const logout = () => {
                 class="flex items-center"
                 v-bind="props.action"
                 :class="{
-                  'dark:bg-gray-800': route().current(
-                    item.routeGroup,
-                    item.routeObject || null,
-                  ),
+                  'bg-gray-100 mx-2 dark:bg-surface-600/80 rounded-lg':
+                    route().current(item.routeGroup, item.routeObject || null),
                 }"
               >
                 <!-- <span :class="item.icon" /> -->
@@ -180,7 +176,7 @@ const logout = () => {
                     <span v-else class="inline-flex rounded-md">
                       <button
                         type="button"
-                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-white bg-gray-100 mx-2 dark:bg-surface-600/80 rounded-lg hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150"
                       >
                         {{ $page.props.auth?.user?.name }}
 
@@ -230,7 +226,7 @@ const logout = () => {
                   </template>
                 </Dropdown>
                 <Link v-else :href="route('login')">
-                  <Button> Submit Recipe </Button>
+                  <Button class="!text-white"> Submit Recipe </Button>
                 </Link>
               </div>
             </template>
@@ -272,7 +268,7 @@ const logout = () => {
                 from any nutrition label
               </p>
               <Link :href="route('login')" class="mt-6 block">
-                <Button> LEARN MORE </Button>
+                <Button class="!text-white"> LEARN MORE </Button>
               </Link>
             </div>
           </div>
