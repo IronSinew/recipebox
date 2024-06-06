@@ -82,11 +82,11 @@ onMounted(() => {
                         class="h-[500px] sm:h-[900px] max-w-4xl relative mx-auto"
                     >
                         <div class="text-center mt-10">
-                            <h1 class="text-3xl lg:text-4xl text-main-dark">
+                            <h1 class="text-3xl lg:text-4xl !text-[#1F1D2B]">
                                 <span class="text-main-orange">Discover</span>
                                 Every Recipe!
                             </h1>
-                            <h4 class="text-base text-main-dark sm:text-lg">
+                            <h4 class="text-base !text-[#1F1D2B] sm:text-lg">
                                 This is a collection of our favorite, or
                                 save-worthy recipes for our benefit, and others
                                 too.
@@ -94,7 +94,7 @@ onMounted(() => {
                             <div class="w-full max-w-7xl flex-1 mx-auto mt-10">
                                 <div class="simple-search relative">
                                     <div
-                                        class="absolute inset-y-0 z-10 flex items-center pl-2"
+                                        class="absolute inset-y-0 z-10 flex items-center pl-4"
                                     >
                                         <i
                                             class="pi pi-search text-surface-400"

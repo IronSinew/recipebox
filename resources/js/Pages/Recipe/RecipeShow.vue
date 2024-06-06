@@ -108,7 +108,7 @@ onUnmounted(() => {
             />
         </div>
 
-        <div class="py-12">
+        <div class="px-6 lg:px-0 py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <h1 class="text-3xl lg:text-6xl text-center font-normal">
                     {{ recipe.name }}
@@ -121,7 +121,9 @@ onUnmounted(() => {
                 />
 
                 <div class="dark:bg-surface-700 bg-main-dark p-6 my-10">
-                    <div class="flex justify-between">
+                    <div
+                        class="flex flex-col lg:flex-row gap-4 justify-between"
+                    >
                         <div class="flex items-center gap-10 text-white">
                             <div class="flex items-center">
                                 <svg
@@ -300,38 +302,40 @@ onUnmounted(() => {
                     </template>
                     <template #footer>
                         <div
-                            class="lg:flex lg:flex-row justify-evenly lg:justify-between"
+                            class="px-4 lg:flex lg:flex-row justify-evenly lg:justify-between"
                         >
                             <div class="">
                                 Categories:
-                                <Link
-                                    v-for="category in recipe.categories"
-                                    :key="category.slug"
-                                    :href="
-                                        route('category.show', {
-                                            category: category.slug,
-                                        })
-                                    "
-                                    class="mr-2"
-                                >
-                                    <Chip :label="category.name" />
-                                </Link>
+                                <div class="flex gap-2 mt-2">
+                                    <Link
+                                        v-for="category in recipe.categories"
+                                        :key="category.slug"
+                                        :href="
+                                            route('category.show', {
+                                                category: category.slug,
+                                            })
+                                        "
+                                    >
+                                        <Chip :label="category.name" />
+                                    </Link>
+                                </div>
                             </div>
                             <div class="lg:hidden mb-10" />
                             <div v-if="recipe.labels.length">
                                 Labels:
-                                <Link
-                                    v-for="label in recipe.labels"
-                                    :key="label.slug"
-                                    :href="
-                                        route('label.show', {
-                                            label: label.slug,
-                                        })
-                                    "
-                                    class="mr-2"
-                                >
-                                    <Chip :label="label.name" />
-                                </Link>
+                                <div class="flex gap-2 mt-2">
+                                    <Link
+                                        v-for="label in recipe.labels"
+                                        :key="label.slug"
+                                        :href="
+                                            route('label.show', {
+                                                label: label.slug,
+                                            })
+                                        "
+                                    >
+                                        <Chip :label="label.name" />
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </template>

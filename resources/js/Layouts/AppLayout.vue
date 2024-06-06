@@ -185,7 +185,7 @@ const logout = () => {
         <Head :title="title" />
 
         <div class="min-h-screen">
-            <nav class="bg-white dark:bg-surface-700 sticky top-0 z-10">
+            <nav class="sticky top-0 z-10">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto print:hidden">
                     <Menubar :model="menuItems">
@@ -394,12 +394,12 @@ const logout = () => {
                     class="w-full h-full flex mx-auto py-20 bg-[url('/assets/sub-footer-bg.png')] bg-no-repeat bg-center relative"
                 >
                     <div class="max-w-4xl relative mx-auto">
-                        <div class="text-center mt-10">
-                            <h1 class="text-3xl lg:text-4xl text-main-dark">
+                        <div class="text-center mt-10 px-4">
+                            <h1 class="text-3xl lg:text-4xl !text-[#1F1D2B]">
                                 <span class="text-main-orange">Recreate</span> a
                                 Recipe!
                             </h1>
-                            <p class="mt-4 lg:text-lg text-main-dark">
+                            <p class="mt-4 lg:text-lg !text-[#1F1D2B]">
                                 Figure out what's in your food! Have you ever
                                 looked at a commercial food product and wondered
                                 how to make it? Not a problem! Use this
@@ -420,7 +420,7 @@ const logout = () => {
                     class="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8"
                 >
                     <div
-                        class="flex justify-center items-center space-x-6 md:order-2"
+                        class="flex justify-center items-center space-x-6 md:order-2 mb-4 lg:mb-0"
                     >
                         <a
                             href="#"
@@ -473,7 +473,7 @@ const logout = () => {
                             </svg>
                         </a>
                     </div>
-                    <p class="text-center text-sm leading-5">
+                    <p class="text-center text-sm leading-5 mb-10 lg:mb-0">
                         Recipebox &copy; {{ new Date().getFullYear() }} All
                         rights reserved.
                     </p>
@@ -484,7 +484,7 @@ const logout = () => {
 </template>
 <style lang="scss">
 div#mainSearch.autocomplete-search > input {
-    padding-left: 35px !important;
+    padding-left: 45px !important;
     @apply py-4 w-full;
 }
 </style>
