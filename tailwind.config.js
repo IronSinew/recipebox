@@ -12,6 +12,7 @@ export default {
     "./resources/**/*.{vue,js,ts,jsx,tsx}",
     "./resources/*/.{vue,js,ts,jsx,tsx}",
   ],
+  darkMode: ["class"],
 
   theme: {
     extend: {

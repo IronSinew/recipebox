@@ -14,8 +14,8 @@ export default {
       "rounded-md",
 
       // Color
-      //   "bg-surface-50 dark:bg-surface-700",
-      //   "border border-surface-200 dark:border-surface-700",
+        "bg-surface-50 dark:bg-surface-700",
+        // "border border-surface-200 dark:border-surface-700",
     ],
   },
   menu: ({ props }) => ({
@@ -45,7 +45,7 @@ export default {
       "border-0",
 
       // Color
-      "bg-surface-0 dark:bg-surface-700 sm:bg-transparent",
+      "bg-surface-0 dark:bg-surface-700",
 
       // Misc
       "outline-none",
@@ -73,8 +73,8 @@ export default {
 
       // Hover States
       {
-        "hover:bg-surface-100 dark:hover:bg-surface-600/80": !context.active,
-        "hover:bg-surface-100 dark:hover:bg-surface-600/80 text-primary-700 dark:text-surface-0/80":
+        "hover:bg-surface-100 dark:bg-surface-700 dark:hover:bg-surface-600/80": !context.active,
+        "hover:bg-surface-100 dark:bg-surface-800 dark:hover:bg-surface-600/80 text-primary-700 dark:text-surface-0/80":
           context.active,
       },
 
