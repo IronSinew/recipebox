@@ -31,11 +31,13 @@
     --surface-900: 45 53 71;
     --surface-950: 8 8 8;
 
+    --primary: 255 255 255;
     --main-dark: 45 53 71;
     --main-orange: 228 109 37;
   }
 
   .dark {
+    --primary: 31 29 43;
     --main-dark: 255 255 255;
   }
 }
