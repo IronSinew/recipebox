@@ -78,7 +78,7 @@ const onLoadMore = () => {
     <AppLayout :title="`${label.name} label`">
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <h1 class="text-5xl text-surface-0 mb-10">
+                <h1 class="text-5xl mb-10">
                     {{ label.name }}
                 </h1>
                 <div

@@ -1,53 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-    body {
-        @apply text-surface-700 dark:text-white/70
-    }
-
-    h1 {
-        @apply text-4xl text-primary-200;
-        .primary {
-            @apply text-primary-400;
-        }
-    }
-    h2 {
-        @apply text-3xl text-primary-200;
-        .primary {
-            @apply text-primary-400;
-        }
-    }
-    h3 {
-        @apply text-2xl text-primary-200;
-        .primary {
-            @apply text-primary-400;
-        }
-    }
-    h4 {
-        @apply text-xl text-primary-200;
-        .primary {
-            @apply text-primary-400;
-        }
-    }
-    h5 {
-        @apply text-lg text-primary-200;
-        .primary {
-            @apply text-primary-400;
-        }
-    }
-    ul {
-        list-style: inside;
-    }
-
-    ol {
-        list-style: decimal;
-        @apply ml-4;
-    }
-}
-
-:root {
+  :root {
     --primary-50: 255 247 237;
     --primary-100: 255 237 213;
     --primary-200: 254 215 170;
@@ -70,10 +28,100 @@
     --surface-600: 75 85 99;
     --surface-700: 55 65 81;
     --surface-800: 31 41 55;
-    --surface-900: 17 24 39;
+    --surface-900: 45 53 71;
     --surface-950: 8 8 8;
+
+    --main-dark: 45 53 71;
+    --main-orange: 228 109 37;
+  }
+
+  .dark {
+    --main-dark: 255 255 255;
+  }
+}
+
+body {
+  /* @apply text-surface-700 dark:text-white/70; */
+  @apply bg-white dark:bg-[#1F1D2B] text-main-dark dark:text-white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a {
+  @apply text-main-dark dark:text-white;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Merienda", cursive;
+}
+
+h1 {
+  @apply text-4xl;
+  font-weight: 900;
+}
+h2 {
+  @apply text-2xl sm:text-3xl;
+  font-weight: 900;
+}
+h3 {
+  @apply text-2xl;
+}
+h4 {
+  @apply text-xl;
+}
+h5 {
+  @apply text-lg;
+}
+ul {
+  list-style: inside;
+}
+
+ol {
+  list-style: decimal;
+  @apply ml-4;
 }
 
 [x-cloak] {
-    display: none;
+  display: none;
+}
+
+.recipe-card {
+  @apply text-main-dark;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  position: relative;
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.angled-recipe-header {
+  overflow: hidden;
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+  @apply 2xl:max-h-[600px];
+}
+
+.angled-recipe-header img {
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+}
+
+.autocomplete-search {
+  input {
+    @apply bg-white border border-surface-300;
+  }
+}
+
+#recipe-card-view {
+  @apply dark:!bg-black/[0.2];
+}
+
+button {
+  @apply !text-main-dark dark:!text-white;
 }

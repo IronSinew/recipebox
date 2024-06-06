@@ -7,6 +7,7 @@ import Galleria from "primevue/galleria";
 import { onMounted, onUnmounted, ref } from "vue";
 
 import Markdown from "@/Components/Markdown.vue";
+import SocialShare from "@/Components/SocialShare.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 const props = defineProps({
@@ -77,9 +78,7 @@ const recipeMarkup = ref({
     cookTime: MinutesToDuration(props.recipe.cook_time),
     totalTime: MinutesToDuration(props.recipe.total_time),
     image: [
-        props.recipe.hero
-            ? props.recipe.hero
-            : "https://placehold.co/350x200?text=No+Image+yet",
+        props.recipe.hero ? props.recipe.hero : "/assets/no-recipe-img.png",
     ],
 });
 
@@ -99,62 +98,146 @@ onUnmounted(() => {
 
 <template>
     <AppLayout :title="recipe.name">
+        <div class="angled-recipe-header relative">
+            <img
+                :src="
+                    recipe.hero ? recipe.hero : '/assets/recipe-hero-no-img.png'
+                "
+                :alt="recipe.name"
+                class="w-full object-cover"
+            />
+        </div>
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <h1 class="text-3xl lg:text-6xl text-center font-normal">
+                    {{ recipe.name }}
+                </h1>
+                <SocialShare />
+                <Markdown
+                    v-if="recipe.description"
+                    :body="recipe.description"
+                    class="my-10 text-center"
+                />
+
+                <div class="dark:bg-surface-700 bg-main-dark p-6 my-10">
+                    <div class="flex justify-between">
+                        <div class="flex items-center gap-10 text-white">
+                            <div class="flex items-center">
+                                <svg
+                                    class="w-5 inline-block"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                                <span class="ml-1">{{
+                                    humanReadableDuration(recipe.total_time)
+                                }}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg
+                                    class="w-5 inline-block"
+                                    viewBox="0 0 24 20"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M2.5 13.5C2.5 8.25 6.75 4 12 4C17.24 4 21.5 8.25 21.5 13.5"
+                                        stroke="white"
+                                        stroke-width="1.3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M2.5 13.5C2.5 8.25 6.75 4 12 4C17.24 4 21.5 8.25 21.5 13.5"
+                                        stroke="white"
+                                        stroke-width="1.3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M10.2 6.87805C7.88002 7.50805 6.06002 9.29805 5.40002 11.6081"
+                                        stroke="white"
+                                        stroke-width="1.3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M1 15.5H23"
+                                        stroke="white"
+                                        stroke-width="1.3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M10.417 2.79201C10.407 1.91201 11.117 1.20201 11.997 1.20201C12.867 1.19201 13.577 1.90201 13.577 2.78201"
+                                        stroke="white"
+                                        stroke-width="1.3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M2.5 15.5C3.23 16.32 3.887 18.5 6.22 18.5H17.77C20.1 18.5 20.76 16.32 21.49 15.5"
+                                        stroke="white"
+                                        stroke-width="1.3"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+
+                                <span class="ml-1">
+                                    {{ recipe.serving }}
+                                </span>
+                            </div>
+                        </div>
+                        <a
+                            class="flex gap-2 text-white items-center"
+                            href="#"
+                            onclick="window.print();return false;"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 100 100"
+                                width="30"
+                                height="30"
+                            >
+                                <path
+                                    fill="#fff"
+                                    d="M31.8 71.5v13.8h36.9v-23H31.8v9.2zm4.6-4.6h27.7v4.6H36.4v-4.6zm0 9.2h27.7v4.6H36.4v-4.6zM68.7 30V16.1H31.8v23.1h36.9z"
+                                ></path>
+                                <path
+                                    fill="#fff"
+                                    d="M77.9 30h-4.6v13.8H27.2V30h-4.6c-4.6 0-9.2 4.6-9.2 9.2v23.1c0 4.6 4.6 9.2 9.2 9.2h4.6V57.7h46.1v13.8h4.6c4.6 0 9.2-4.6 9.2-9.2V39.2c.1-4.6-4.5-9.2-9.2-9.2z"
+                                ></path>
+                            </svg>
+                            <p class="text-white">Print Recipe</p>
+                        </a>
+                    </div>
+                </div>
                 <Card
                     id="recipe-card-view"
-                    style="overflow: hidden; position: relative"
+                    style="
+                        overflow: hidden;
+                        position: relative;
+                        box-shadow: none;
+                    "
                 >
-                    <template #header>
-                        <div v-if="recipe.hero" class="print:hidden">
-                            <img
-                                class="object-center object-cover w-full h-96"
-                                :src="recipe.hero"
-                            />
-                        </div>
-                    </template>
                     <template #content>
-                        <div class="grid lg:grid-cols-6 lg:grid-rows-2 gap-10">
-                            <div
-                                class="lg:col-span-2 row-span-3 col-start-1 row-start-2"
-                            >
-                                <h3 class="text-xl text-primary-200 mb-4 mt-4">
-                                    Ingredients:
-                                </h3>
-                                <Markdown :body="recipe.ingredients" />
-                            </div>
-                            <div
-                                class="lg:col-span-6 lg:col-start-1 lg:row-start-1"
-                            >
-                                <h2 class="text-2xl text-primary-400">
-                                    {{ recipe.name }}
-                                </h2>
-                                <h5 class="text-sm mb-5">
-                                    Last Updated:
-                                    {{
-                                        new Intl.DateTimeFormat(
-                                            Intl.DateTimeFormat().resolvedOptions().locale,
-                                        ).format(new Date(recipe.updated_at))
-                                    }}
-                                </h5>
-                                <div>
-                                    Prep:
-                                    {{
-                                        humanReadableDuration(recipe.prep_time)
-                                    }}
-                                </div>
-                                <div>
-                                    Cook:
-                                    {{
-                                        humanReadableDuration(recipe.cook_time)
-                                    }}
-                                </div>
-                                <div>Servings: {{ recipe.serving }}</div>
-                                <Markdown
-                                    v-if="recipe.description"
-                                    :body="recipe.description"
-                                    class="mt-10"
-                                />
+                        <div
+                            v-if="recipe.media.length"
+                            class="flex flex-wrap w-full mt-5"
+                        >
+                            <div class="w-full">
                                 <Galleria
                                     v-model:activeIndex="mediaIndex"
                                     v-model:visible="mediaDisplay"
@@ -183,30 +266,32 @@ onUnmounted(() => {
                                         />
                                     </template>
                                 </Galleria>
-                                <div
-                                    v-if="recipe.media"
-                                    class="flex flex-wrap w-full mt-5"
-                                >
-                                    <div class="gallery-container mx-auto">
-                                        <div class="gallery">
-                                            <img
-                                                v-for="(
-                                                    image, index
-                                                ) of recipe.media"
-                                                :key="index"
-                                                :src="image.preview_url"
-                                                class="cursor-pointer"
-                                                alt=""
-                                                @click="imageClick(index)"
-                                            />
-                                        </div>
+                                <div class="gallery-container mx-auto">
+                                    <div class="gallery">
+                                        <img
+                                            v-for="(
+                                                image, index
+                                            ) of recipe.media"
+                                            :key="index"
+                                            :src="image.preview_url"
+                                            class="cursor-pointer"
+                                            alt=""
+                                            @click="imageClick(index)"
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="lg:col-span-4 lg:row-span-3 lg:col-start-3 lg:row-start-2"
-                            >
-                                <h3 class="text-xl text-primary-200 mb-4 mt-4">
+                        </div>
+                        <div
+                            class="grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 py-4"
+                        >
+                            <div class="w-full">
+                                <h3 class="text-3xl mb-4 mt-4">Ingredients:</h3>
+                                <Markdown :body="recipe.ingredients" />
+                            </div>
+
+                            <div class="w-full lg:col-span-2">
+                                <h3 class="text-3xl mb-4 mt-4">
                                     Instructions:
                                 </h3>
                                 <Markdown :body="recipe.instructions" />

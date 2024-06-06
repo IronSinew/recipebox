@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,6 +17,8 @@ class HomeController extends Controller
                 ->orderBy('id', 'desc')
                 ->limit(3)
                 ->get()),
+
+            'categories' => fn () => Category::withCount('recipes')->get(),
         ]);
     }
 }

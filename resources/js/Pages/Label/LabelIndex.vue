@@ -1,8 +1,9 @@
 <script setup>
 import { Link, router } from "@inertiajs/vue3";
 import Button from "primevue/button";
-import Card from "primevue/card";
 
+// import Card from "primevue/card";
+import LabelCard from "@/Components/LabelCard.vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 defineProps({
@@ -23,15 +24,16 @@ defineProps({
                 <div
                     class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
                 >
-                    <Card
+                    <LabelCard
                         v-for="label in labels"
                         :key="label.id"
+                        :label="label"
                         style="overflow: hidden; position: relative"
                     >
-                        <template #title>
-                            {{ label.name }}
-                        </template>
-                        <template #content>
+                        <!-- <template #title>
+              {{ label.name }}
+            </template> -->
+                        <template #link>
                             <Link
                                 :href="
                                     route('label.show', { label: label.slug })
@@ -48,7 +50,7 @@ defineProps({
                                 :label="`View all ${label.recipes_count} recipes`"
                                 icon="pi pi-arrow-right"
                                 icon-pos="right"
-                                class="float-right"
+                                class="!text-white !text-xs !py-1"
                                 @click="
                                     router.visit(
                                         route('label.show', {
@@ -57,9 +59,9 @@ defineProps({
                                     )
                                 "
                             />
-                            <div class="clear-both" />
+                            <!-- <div class="clear-both" /> -->
                         </template>
-                    </Card>
+                    </LabelCard>
                 </div>
             </div>
         </div>
