@@ -10,6 +10,6 @@ class SearchSimpleController extends Controller
 {
     public function __invoke(Request $request): JsonResponse
     {
-        return response()->json(Recipe::search($request->search)->get('slug', 'name'));
+        return response()->json(Recipe::search($request->search)->get());
     }
 }

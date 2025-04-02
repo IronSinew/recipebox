@@ -50,6 +50,14 @@ services:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 30s
       start_period: 0s
+  typesense:
+      image: typesense/typesense:27.1
+      restart: on-failure
+      ports:
+          - "127.0.0.1:${TYPESENSE_PORT:-8108}:8108"
+      volumes:
+          - typesensemount:/data
+      command: "--data-dir /data --api-key=${TYPESENSE_KEY:-xyz} --enable-cors"
   mail:
     image: 'mailhog/mailhog:latest'
     ports:
@@ -58,3 +66,4 @@ services:
 volumes:
   pgsqlmount:
   redismount:
+  typesensemount:

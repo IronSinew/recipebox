@@ -96,7 +96,10 @@ class Recipe extends Model implements HasMedia
     public function toSearchableArray(): array
     {
         return [
+            'id' => (string) $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
+            'created_at' => $this->created_at->timestamp,
             //            'ingredients' => $this->ingredients,
         ];
     }
