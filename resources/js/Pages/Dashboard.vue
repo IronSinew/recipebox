@@ -117,7 +117,7 @@ onMounted(() => {
                                                 class="ml-2"
                                             >
                                                 <p
-                                                    class="text-sm font-semibold leading-none text-primary"
+                                                    class="text-sm font-semibold leading-none"
                                                 >
                                                     {{ slotProps.item.name }}
                                                 </p>
