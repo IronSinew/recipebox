@@ -9,6 +9,7 @@
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/framework": "^11.0",
         "laravel/jetstream": "^5.0",
+        "laravel/nightwatch": "^1.10",
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.8",
         "laravel/tinker": "^2.9",
