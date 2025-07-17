@@ -1,4 +1,4 @@
-// prettier.config.js
+// prettier.config.cjs
 // eslint-disable-next-line no-undef
 module.exports = {
     printWidth: 100,

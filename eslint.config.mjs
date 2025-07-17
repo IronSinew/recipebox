@@ -54,7 +54,6 @@ export default [
         },
 
         rules: {
-            "indent": ["error", 4],
             "jsdoc/require-description": "warn",
             "jsdoc/check-values": "warn",
 
