@@ -13,8 +13,6 @@
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $slug
@@ -25,28 +23,28 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Category onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Category ordered(string $direction = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|Category query()
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereOrderColumn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Category withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Category withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category ordered(string $direction = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereOrderColumn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withoutTrashed()
+ * @mixin \Eloquent
  */
-	class Category extends \Eloquent implements \Spatie\EloquentSortable\Sortable {}
+	#[\AllowDynamicProperties]
+	class IdeHelperCategory {}
 }
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $slug
@@ -57,28 +55,28 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
  * @property-read int|null $recipes_count
  * @method static \Database\Factories\LabelFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Label newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Label newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Label onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Label ordered(string $direction = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|Label query()
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereOrderColumn($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Label whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Label withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Label withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label ordered(string $direction = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereOrderColumn($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label withoutTrashed()
+ * @mixin \Eloquent
  */
-	class Label extends \Eloquent implements \Spatie\EloquentSortable\Sortable {}
+	#[\AllowDynamicProperties]
+	class IdeHelperLabel {}
 }
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $slug
@@ -104,40 +102,40 @@ namespace App\Models{
  * @property-read int|null $media_count
  * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\RecipeFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe query()
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCookTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereIngredients($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereInstructions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe wherePrepTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe wherePublishedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereServing($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereTotalTime($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Recipe withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereCookTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereIngredients($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereInstructions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe wherePrepTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe wherePublishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereServing($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereTotalTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe withoutTrashed()
+ * @mixin \Eloquent
  */
-	class Recipe extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	#[\AllowDynamicProperties]
+	class IdeHelperRecipe {}
 }
 
 namespace App\Models{
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property mixed $password
+ * @property string $password
  * @property string|null $remember_token
  * @property int|null $current_team_id
  * @property string|null $profile_photo_path
@@ -150,27 +148,31 @@ namespace App\Models{
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read string $profile_photo_url
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Recipe> $recipes
+ * @property-read int|null $recipes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User query()
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCurrentTeamId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereProfilePhotoPath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorConfirmedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorRecoveryCodes($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTwoFactorSecret($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCurrentTeamId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereProfilePhotoPath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorConfirmedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorRecoveryCodes($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTwoFactorSecret($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class User extends \Eloquent {}
+	#[\AllowDynamicProperties]
+	class IdeHelperUser {}
 }
 

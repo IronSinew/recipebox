@@ -32,11 +32,11 @@ class BasicSeeder extends Seeder
 
         Recipe::all()->each(function ($recipe) use ($categories, $labels) {
             $recipe->categories()->attach(
-                $categories->random(rand(1, 3))->pluck('id')->toArray()
+                $categories->random(fake()->randomNumber(1, 3))->pluck('id')->toArray()
             );
 
             $recipe->labels()->attach(
-                $labels->random(rand(1, 3))->pluck('id')->toArray()
+                $labels->random(fake()->randonNumber(1, 3))->pluck('id')->toArray()
             );
         });
     }

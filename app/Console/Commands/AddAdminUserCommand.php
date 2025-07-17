@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Console\Command;
 
 /** @codeCoverageIgnore  */
-class AddAdminUser extends Command
+class AddAdminUserCommand extends Command
 {
     /**
      * The name and signature of the console command.

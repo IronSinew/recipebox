@@ -22,14 +22,6 @@ class CategoryController extends Controller
         ]);
     }
 
-    /** @codeCoverageIgnore  */
-    public function setNewOrder(Request $request)
-    {
-        Category::setNewOrder($request->all());
-
-        return response()->noContent();
-    }
-
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

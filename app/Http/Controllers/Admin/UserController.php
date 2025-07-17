@@ -66,7 +66,7 @@ class UserController extends Controller
     public function create()
     {
         return Inertia::render('Admin/User/UserEdit')->with([
-            'user' => fn () => new User(),
+            'user' => fn () => new User,
             'roles' => fn () => UserRoleEnum::toSelectOptions(),
         ]);
     }

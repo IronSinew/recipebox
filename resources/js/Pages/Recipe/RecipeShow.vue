@@ -241,7 +241,7 @@ onUnmounted(() => {
                         >
                             <div class="w-full">
                                 <Galleria
-                                    v-model:activeIndex="mediaIndex"
+                                    v-model:active-index="mediaIndex"
                                     v-model:visible="mediaDisplay"
                                     :value="recipe.media"
                                     :responsive-options="responsiveOptions"

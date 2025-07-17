@@ -24,6 +24,10 @@ services:
       context: .
       dockerfile: './provision/docker_php'
     restart: unless-stopped
+    environment:
+        PHPSTAN_PRO_WEB_PORT: 11111
+    ports:
+        - "127.0.0.1:11111:11111"
     volumes:
       - ./:/var/www/app
       - ./provision/imagick.xml:/etc/ImageMagick-6/policy.xml

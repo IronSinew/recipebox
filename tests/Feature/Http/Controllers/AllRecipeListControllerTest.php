@@ -1,31 +1,18 @@
 <?php
 
-namespace Http\Controllers;
-
 use App\Models\Recipe;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
-use PHPUnit\Framework\Attributes\Test;
-use Tests\TestCase;
 
-/**
- * @see \App\Http\Controllers\AllRecipeListController
- */
-final class AllRecipeListControllerTest extends TestCase
-{
-    use RefreshDatabase;
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-    #[Test]
-    public function index_displays_view(): void
-    {
-        Recipe::factory()->count(5)->create();
+test('index displays view', function () {
+    Recipe::factory()->count(5)->create();
 
-        $response = $this->get(route('recipe.all'));
+    $response = $this->get(route('recipe.all'));
 
-        $response->assertOk();
-        $response->assertInertia(fn (Assert $page) => $page
-            ->component('Recipe/RecipeList')
-            ->has('recipes.data', 5)
-        );
-    }
-}
+    $response->assertOk();
+    $response->assertInertia(fn (Assert $page) => $page
+        ->component('Recipe/RecipeList')
+        ->has('recipes.data', 5)
+    );
+});
