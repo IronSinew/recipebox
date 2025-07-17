@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build-dry": "vite build --outDir /tmp/recipebox --emptyOutDir",
     "lint-fix": "bun run lint-js-fix && bun run lint-vue-fix",
     "lint-js": "node_modules/.bin/eslint --ext .js ./resources/js",
     "lint-js-fix": "node_modules/.bin/eslint ./resources/js --ext .js --fix",

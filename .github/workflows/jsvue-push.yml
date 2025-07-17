@@ -1,0 +1,69 @@
+name: JSandVue
+
+on:
+  pull_request:
+    paths:
+      - "**/*.vue"
+      - "**/*.js"
+      - "**/*.ts"
+      - "package.json"
+      - "bun.lockb"
+      - "bunfig.toml"
+      - ".github/workflows/jsvue-push.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-jsvue-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-js:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Cache Node Modules
+        uses: actions/cache@v5
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-bun_node_modules-v2-${{ hashFiles('**/bun.lockb') }}
+
+      - name: JS Lint
+        run: bun install && bun run lint-fix
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        if: ${{ !env.ACT }}
+        with:
+          commit_message: "chore(lint): Apply eslint changes"
+          commit_options: "--no-verify"
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          ini-values: memory_limit=-1
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v4
+        if: ${{ !env.ACT }}
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Confirm build works
+        run: bun run build-dry
