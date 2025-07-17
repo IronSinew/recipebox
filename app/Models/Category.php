@@ -11,24 +11,18 @@ use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @mixin IdeHelperCategory
+ */
 class Category extends Model implements Sortable
 {
-    use HasFactory, HasSlug, SoftDeletes, SortableTrait;
+    use HasFactory, HasSlug, SortableTrait;
+    use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'id' => 'integer',
     ];

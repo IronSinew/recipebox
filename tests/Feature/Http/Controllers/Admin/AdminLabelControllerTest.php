@@ -1,105 +1,80 @@
 <?php
 
-namespace Http\Controllers\Admin;
-
 use App\Enums\UserRoleEnum;
 use App\Models\Label;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
-use PHPUnit\Framework\Attributes\Test;
-use Tests\TestCase;
 
-final class AdminLabelControllerTest extends TestCase
-{
-    use RefreshDatabase;
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-    protected User $adminUser;
+beforeEach(function () {
+    $this->adminUser = User::factory()->create(['role' => UserRoleEnum::ADMIN]);
+    $this->nonAdminUser = User::factory()->create();
+});
 
-    protected User $nonAdminUser;
+test('index displays view to admin', function () {
+    Label::factory()->count(3)->create();
+    $this->actingAs($this->adminUser);
+    $response = $this->get(route('admin.labels.index'));
 
-    public function setUp(): void
-    {
-        parent::setUp();
+    $response->assertOk();
+    $response->assertInertia(fn (Assert $page) => $page
+        ->component('Admin/Label/LabelIndex')
+        ->has('labels', 3)
+    );
+});
 
-        $this->adminUser = User::factory()->create(['role' => UserRoleEnum::ADMIN]);
-        $this->nonAdminUser = User::factory()->create();
-    }
+test('store submit works as admin', function () {
+    Label::factory()->count(3)->create();
+    $this->actingAs($this->adminUser);
+    $response = $this->followingRedirects()->post(route('admin.labels.store'), ['name' => 'Foo']);
 
-    #[Test]
-    public function index_displays_view_to_admin(): void
-    {
-        Label::factory()->count(3)->create();
-        $this->actingAs($this->adminUser);
-        $response = $this->get(route('admin.labels.index'));
+    $response->assertOk();
+    $response->assertInertia(fn (Assert $page) => $page
+        ->component('Admin/Label/LabelIndex')
+        ->has('labels', 4)
+    );
+});
 
-        $response->assertOk();
-        $response->assertInertia(fn (Assert $page) => $page
-            ->component('Admin/Label/LabelIndex')
-            ->has('labels', 3)
-        );
-    }
+test('destroy submit works as admin', function () {
+    Label::factory()->count(3)->create();
+    $label = Label::first();
 
-    #[Test]
-    public function store_submit_works_as_admin(): void
-    {
-        Label::factory()->count(3)->create();
-        $this->actingAs($this->adminUser);
-        $response = $this->followingRedirects()->post(route('admin.labels.store'), ['name' => 'Foo']);
+    $this->actingAs($this->adminUser);
+    $response = $this->followingRedirects()->delete(route('admin.labels.destroy', ['label' => $label]));
 
-        $response->assertOk();
-        $response->assertInertia(fn (Assert $page) => $page
-            ->component('Admin/Label/LabelIndex')
-            ->has('labels', 4)
-        );
-    }
+    $response->assertOk();
+    $response->assertInertia(fn (Assert $page) => $page
+        ->component('Admin/Label/LabelIndex')
+        ->has('labels', 3)
+    );
 
-    #[Test]
-    public function destroy_submit_works_as_admin(): void
-    {
-        Label::factory()->count(3)->create();
-        $label = Label::first();
+    expect(Label::onlyTrashed()->count())->toBe(1);
+});
 
-        $this->actingAs($this->adminUser);
-        $response = $this->followingRedirects()->delete(route('admin.labels.destroy', ['label' => $label]));
+test('restore submit works as admin', function () {
+    Label::factory()->count(3)->create();
+    $label = Label::first();
+    $label->delete();
 
-        $response->assertOk();
-        $response->assertInertia(fn (Assert $page) => $page
-            ->component('Admin/Label/LabelIndex')
-            ->has('labels', 3)
-        );
+    expect(Label::onlyTrashed()->count())->toBe(1);
 
-        $this->assertSame(1, Label::onlyTrashed()->count());
-    }
+    $this->actingAs($this->adminUser);
+    $response = $this->followingRedirects()->put(route('admin.labels.restore', ['label' => $label]));
 
-    #[Test]
-    public function restore_submit_works_as_admin(): void
-    {
-        Label::factory()->count(3)->create();
-        $label = Label::first();
-        $label->delete();
+    $response->assertOk();
+    $response->assertInertia(fn (Assert $page) => $page
+        ->component('Admin/Label/LabelIndex')
+        ->has('labels', 3)
+    );
 
-        $this->assertSame(1, Label::onlyTrashed()->count());
+    expect(Label::onlyTrashed()->count())->toBe(0);
+});
 
-        $this->actingAs($this->adminUser);
-        $response = $this->followingRedirects()->put(route('admin.labels.restore', ['label' => $label]));
+test('index does not display view to nonadmin', function () {
+    Label::factory()->count(3)->create();
+    $this->actingAs($this->nonAdminUser);
+    $response = $this->get(route('admin.labels.index'));
 
-        $response->assertOk();
-        $response->assertInertia(fn (Assert $page) => $page
-            ->component('Admin/Label/LabelIndex')
-            ->has('labels', 3)
-        );
-
-        $this->assertSame(0, Label::onlyTrashed()->count());
-    }
-
-    #[Test]
-    public function index_does_not_display_view_to_nonadmin(): void
-    {
-        Label::factory()->count(3)->create();
-        $this->actingAs($this->nonAdminUser);
-        $response = $this->get(route('admin.labels.index'));
-
-        $response->assertRedirect('/');
-    }
-}
+    $response->assertRedirect('/');
+});

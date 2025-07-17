@@ -15,6 +15,9 @@ on:
       - "composer.lock"
       - "composer.json"
 
+permissions:
+  contents: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -46,7 +49,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.4
           extensions: imagick, mbstring, sqlite, pdo-sqlite, :php-psr
           coverage: pcov
           ini-values: memory_limit=-1
@@ -72,10 +75,13 @@ jobs:
       - name: PHP Lint
         run: composer run pint
 
+      - name: Set git to ignore file mode changes
+        run: git config core.fileMode false
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         if: ${{ !env.ACT }}
         with:
-          commit_message: Apply pint changes
+          commit_message: "chore(lint): Apply pint changes"
 
       - name: Set app key
         run: APP_ENV=testing php artisan key:generate
@@ -86,7 +92,7 @@ jobs:
           DB_HOST: localhost
 
       - name: Codecov
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./clover.xml

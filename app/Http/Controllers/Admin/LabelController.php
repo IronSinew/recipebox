@@ -21,14 +21,6 @@ class LabelController extends Controller
         ]);
     }
 
-    /** @codeCoverageIgnore  */
-    public function setNewOrder(Request $request)
-    {
-        Label::setNewOrder($request->all());
-
-        return response()->noContent();
-    }
-
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([

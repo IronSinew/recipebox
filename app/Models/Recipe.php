@@ -16,15 +16,13 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @mixin IdeHelperRecipe
+ */
 class Recipe extends Model implements HasMedia
 {
     use HasFactory, HasSlug, InteractsWithMedia, Searchable, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'serving',
@@ -37,11 +35,6 @@ class Recipe extends Model implements HasMedia
         'user_id',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'id' => 'integer',
         'published_at' => 'timestamp',
@@ -74,12 +67,13 @@ class Recipe extends Model implements HasMedia
     protected function heroPreview(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMedia('hero')?->preview_url ?? '',
+            get: fn () => $this->getFirstMedia('hero')->preview_url ?? '',
         );
     }
 
     public function registerMediaConversions(?Media $media = null): void
     {
+        /** @phpstan-ignore-next-line  */
         $this
             ->addMediaConversion('preview')
             ->fit(Fit::Contain, 600, 400)

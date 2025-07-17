@@ -19,11 +19,11 @@ class AppServiceProvider extends ServiceProvider
         Model::preventLazyLoading(! app()->isProduction());
         Model::preventAccessingMissingAttributes(! app()->isProduction());
 
-        //@codeCoverageIgnoreStart
+        // @codeCoverageIgnoreStart
         if (app()->isProduction()) {
             URL::forceScheme('https');
         }
-        //@codeCoverageIgnoreEnd
+        // @codeCoverageIgnoreEnd
 
         // @codeCoverageIgnoreStart
         if ($this->app->isLocal()) {
@@ -32,7 +32,6 @@ class AppServiceProvider extends ServiceProvider
         // @codeCoverageIgnoreEnd
 
         RedirectResponse::macro('withBanner', function (string $message, ?BannerTypeEnum $bannerType = BannerTypeEnum::success) {
-            // @phpstan-ignore-next-line
             return $this->with('flash', [
                 'bannerStyle' => $bannerType,
                 'banner' => $message,

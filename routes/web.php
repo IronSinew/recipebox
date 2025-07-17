@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ImageController;
+use App\Http\Controllers\Admin\ImageStoreController;
 use App\Http\Controllers\Admin\LabelController as AdminLabelController;
+use App\Http\Controllers\Admin\MakeHeroController;
 use App\Http\Controllers\Admin\RecipeController as AdminRecipeController;
+use App\Http\Controllers\Admin\SetCategoryOrderController;
+use App\Http\Controllers\Admin\SetLabelOrderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AllRecipeListController;
 use App\Http\Controllers\CategoryController;
@@ -41,14 +45,14 @@ Route::prefix('/admin')->name('admin.')->middleware([
          */
         Route::middleware(IsAdmin::class)->group(function () {
             // labels
-            Route::post('/labels/order', [AdminLabelController::class, 'setNewOrder'])->name('labels.set_order');
+            Route::post('/labels/order', SetLabelOrderController::class)->name('labels.set_order');
             Route::put('/labels/{label}/restore', [AdminLabelController::class, 'restore'])
                 ->withTrashed()
                 ->name('labels.restore');
             Route::resource('labels', AdminLabelController::class)->except('show', 'create');
 
             // categories
-            Route::post('/categories/order', [AdminCategoryController::class, 'setNewOrder'])->name('categories.set_order');
+            Route::post('/categories/order', SetCategoryOrderController::class)->name('categories.set_order');
             Route::put('/categories/{category}/restore', [AdminCategoryController::class, 'restore'])
                 ->withTrashed()
                 ->name('categories.restore');
@@ -63,17 +67,16 @@ Route::prefix('/admin')->name('admin.')->middleware([
          */
         // recipes
         Route::put('/recipes/{recipe}/restore', [AdminRecipeController::class, 'restore'])->withTrashed()->name('recipes.restore');
-        Route::post('/recipes/{recipe}/image', [AdminRecipeController::class, 'imageStore'])->withTrashed()->name('recipes.images.store');
+        Route::post('/recipes/{recipe}/image', ImageStoreController::class)->withTrashed()->name('recipes.images.store');
         Route::resource('recipes', AdminRecipeController::class)->except('show')->withTrashed(['edit']);
 
         // images
         Route::delete('/images/{media}', [ImageController::class, 'destroy'])->name('images.destroy');
-        Route::post('/images/{media}/hero', [ImageController::class, 'makeHero'])->name('images.make_hero');
+        Route::post('/images/{media}/hero', MakeHeroController::class)->name('images.make_hero');
     });
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
-});
+])->group(function () {});
