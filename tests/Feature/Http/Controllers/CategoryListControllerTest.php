@@ -1,27 +1,14 @@
 <?php
 
-namespace Http\Controllers;
-
 use App\Models\Category;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\Attributes\Test;
-use Tests\TestCase;
 
-/**
- * @see \App\Http\Controllers\CategoryController
- */
-final class CategoryListControllerTest extends TestCase
-{
-    use RefreshDatabase;
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-    #[Test]
-    public function index_displays_view(): void
-    {
-        $categories = Category::factory()->count(5)->create();
+test('index displays view', function () {
+    $categories = Category::factory()->count(5)->create();
 
-        $response = $this->get(route('category.list'));
+    $response = $this->get(route('category.list'));
 
-        $response->assertOk();
-        $response->assertJsonCount(5);
-    }
-}
+    $response->assertOk();
+    $response->assertJsonCount(5);
+});

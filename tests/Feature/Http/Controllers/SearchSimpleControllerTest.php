@@ -1,35 +1,22 @@
 <?php
 
-namespace Http\Controllers;
-
 use App\Models\Recipe;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\Attributes\Test;
-use Tests\TestCase;
 
-/**
- * @see \App\Http\Controllers\RecipeController
- */
-final class SearchSimpleControllerTest extends TestCase
-{
-    use RefreshDatabase;
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-    #[Test]
-    public function search_gives_results(): void
-    {
-        Recipe::factory()->create([
-            'name' => 'Mac and Cheese',
-        ]);
+test('search gives results', function () {
+    Recipe::factory()->create([
+        'name' => 'Mac and Cheese',
+    ]);
 
-        Recipe::factory()->create([
-            'name' => 'Fruit Salad',
-        ]);
+    Recipe::factory()->create([
+        'name' => 'Fruit Salad',
+    ]);
 
-        $response = $this->postJson(route('search.simple'), ['search' => 'Mac']);
+    $response = $this->postJson(route('search.simple'), ['search' => 'Mac']);
 
-        $response->assertOk();
+    $response->assertOk();
 
-        $response->assertJsonPath('0.name', 'Mac and Cheese');
-        $this->assertGreaterThan(0, Recipe::count());
-    }
-}
+    $response->assertJsonPath('0.name', 'Mac and Cheese');
+    expect(Recipe::count())->toBeGreaterThan(0);
+});
