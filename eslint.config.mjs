@@ -54,6 +54,8 @@ export default [
         },
 
         rules: {
+            "indent": ["error", 4],
+            "no-tabs": 0,
             "jsdoc/require-description": "warn",
             "jsdoc/check-values": "warn",
 
