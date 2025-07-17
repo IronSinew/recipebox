@@ -1,8 +1,10 @@
 import { router } from "@inertiajs/vue3";
 
 export function makeHero(id, onSuccess, onFinish, onError) {
-    // eslint-disable-next-line
-  router.post(route('admin.images.make_hero', { media: id }), {}, {
+    router.post(
+        route("admin.images.make_hero", { media: id }),
+        {},
+        {
             onFinish: () => {
                 if (typeof onFinish !== "undefined") {
                     onFinish();
@@ -22,8 +24,7 @@ export function makeHero(id, onSuccess, onFinish, onError) {
     );
 }
 export function destroyHero(id, onSuccess, onFinish, onError) {
-    // eslint-disable-next-line
-  router.delete(route('admin.images.destroy', { media: id }), {
+    router.delete(route("admin.images.destroy", { media: id }), {
         onFinish: () => {
             if (typeof onFinish !== "undefined") {
                 onFinish();
