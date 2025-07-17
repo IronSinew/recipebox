@@ -7,7 +7,7 @@ on:
       - "**/*.js"
       - "**/*.ts"
       - "package.json"
-      - "bun.lockb"
+      - "bun.lock"
       - "bunfig.toml"
       - ".github/workflows/jsvue-push.yml"
 
@@ -33,7 +33,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-bun_node_modules-v2-${{ hashFiles('**/bun.lockb') }}
+          key: ${{ runner.os }}-bun_node_modules-v2-${{ hashFiles('**/bun.lock') }}
 
       - name: JS Lint
         run: bun install && bun run lint-fix

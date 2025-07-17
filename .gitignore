@@ -51,3 +51,4 @@ cert.pem
 /.editorconfig
 /storage/media-library/*
 /.run
+/.bun.lockb
