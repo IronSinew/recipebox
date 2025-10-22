@@ -12,15 +12,9 @@ class AllRecipeListController extends Controller
     {
         $perPageAmount = 9;
 
-        // @codeCoverageIgnoreStart
-        if ($request->wantsJson()) {
-            return Recipe::orderBy('id')->cursorPaginate($perPageAmount);
-        }
-        // @codeCoverageIgnoreEnd
-
         return Inertia::render('Recipe/RecipeList')->with([
             'label' => fn () => collect(['name' => 'All Recipes']),
-            'recipes' => fn () => Recipe::orderBy('id')->cursorPaginate($perPageAmount),
+            'recipes' => Inertia::scroll(fn () => Recipe::paginate($perPageAmount)),
         ]);
     }
 }
