@@ -36,7 +36,7 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'current_route_salted' => implode('|', [\Route::currentRouteName().\Str::random(10)]),
+            'current_route_salted' => implode('|', [\Route::currentRouteName(), \Str::random(10)]),
             'can_access_admin_area' => $request->user()?->hasAccessToAdminArea() ?? false,
         ]);
     }
