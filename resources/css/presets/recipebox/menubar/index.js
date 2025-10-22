@@ -52,7 +52,7 @@ export default {
     ],
   }),
   menuitem: {
-    class: "sm:relative sm:w-auto w-full static",
+    class: "sm:relative sm:w-auto w-full static mr-1",
   },
   content: ({ props, context }) => ({
     class: [

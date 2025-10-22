@@ -7,7 +7,7 @@ import Chip from "primevue/chip";
 import Dialog from "primevue/dialog";
 import Menubar from "primevue/menubar";
 import Message from "primevue/message";
-import { nextTick, onMounted, ref, watchEffect } from "vue";
+import { computed, nextTick, onMounted, ref, watch, watchEffect } from "vue";
 
 import ApplicationMark from "@/Components/ApplicationMark.vue";
 import DarkModeButton from "@/Components/DarkModeButton.vue";
@@ -28,7 +28,6 @@ const searchModal = ref({
 const menuItems = ref([
     {
         label: "Categories",
-        icon: "pi pi-star",
         route: "category.index",
         routeGroup: "category.*",
         items: [
@@ -40,13 +39,13 @@ const menuItems = ref([
     },
     {
         label: "Labels",
-        icon: "pi pi-envelope",
         route: "label.index",
+        routeGroup: "label.*",
     },
     {
         label: "All Recipes",
-        icon: "pi pi-list",
         route: "recipe.all",
+        routeGroup: "recipe.all",
     },
 ]);
 
@@ -120,6 +119,32 @@ const autocompleteInput = ref(null);
 const logout = () => {
     router.post(route("logout"));
 };
+
+const animate = ref(true);
+const isLeaving = ref(false);
+
+const theRoute = ref(route());
+
+const currentRoute = computed(() => usePage().props.current_route_salted);
+watch(currentRoute, async () => {
+    isLeaving.value = true;
+    animate.value = false;
+
+    // Wait for leave animation to complete
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    isLeaving.value = false;
+    nextTick(() => {
+        animate.value = true;
+    });
+});
+
+router.on("navigate", () => {
+    theRoute.value = route();
+});
+const current = computed(() => {
+    return theRoute.value.current();
+});
 </script>
 
 <template>
@@ -185,7 +210,7 @@ const logout = () => {
     <div>
         <Head :title="title" />
 
-        <div class="min-h-screen">
+        <div class="min-h-screen transition-all duration-300">
             <nav class="sticky top-0 z-10">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto print:hidden">
@@ -206,17 +231,21 @@ const logout = () => {
                                 :href="
                                     route(item.route, item.routeObject || null)
                                 "
-                                :class="{
-                                    'bg-gray-100 dark:bg-surface-600/80 rounded-lg':
-                                        route().current(
-                                            item.route,
-                                            item.routeObject || null,
-                                        ),
-                                }"
                             >
-                                <span v-ripple v-bind="props.action">
+                                <span
+                                    v-ripple
+                                    v-bind="props.action"
+                                    :class="{
+                                        'bg-gray-100 dark:bg-surface-600/80 rounded-lg':
+                                            theRoute.current(item.route) &&
+                                            root,
+                                    }"
+                                >
                                     <!-- <span :class="item.icon" /> -->
-                                    <span class="ml-2">{{ item.label }}</span>
+                                    <span
+                                        :class="{ 'ml-2': item.icon?.length }"
+                                        >{{ item.label }}</span
+                                    >
                                 </span>
                             </Link>
                             <a
@@ -226,14 +255,13 @@ const logout = () => {
                                 v-bind="props.action"
                                 :class="{
                                     'bg-gray-100 mx-2 dark:bg-surface-600/80 rounded-lg':
-                                        route().current(
-                                            item.routeGroup,
-                                            item.routeObject || null,
-                                        ),
+                                        theRoute.current(item.routeGroup),
                                 }"
                             >
                                 <!-- <span :class="item.icon" /> -->
-                                <span class="ml-2">{{ item.label }}</span>
+                                <span :class="{ 'ml-2': item.icon?.length }">{{
+                                    item.label
+                                }}</span>
                                 <Badge
                                     v-if="item.badge"
                                     :class="{ 'ml-auto': !root, 'ml-2': root }"
@@ -384,10 +412,18 @@ const logout = () => {
                 </Message>
             </div>
 
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+            <transition name="slide-fade" mode="out-in" appear>
+                <div
+                    v-if="animate"
+                    :class="{ 'is-leaving': isLeaving }"
+                    class="mx-auto container h-full"
+                >
+                    <!-- Page Content -->
+                    <main>
+                        <slot />
+                    </main>
+                </div>
+            </transition>
 
             <div class="max-w-7xl mx-auto overflow-hidden mb-12 px-8">
                 <div
@@ -490,8 +526,96 @@ const logout = () => {
 #header-slot > .header-wrapper:has(*) {
     display: block;
 }
+
 div#mainSearch.autocomplete-search > input {
     padding-left: 45px !important;
     @apply py-4 w-full;
+}
+
+/*
+  Slide Fade Transition
+*/
+.slide-right-enter-active,
+.slide-left-enter-active,
+.slide-bottom-enter-active,
+.slide-top-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.slide-right-leave-active,
+.slide-left-leave-active,
+.slide-bottom-leave-active,
+.slide-top-enter-active {
+    transition: all 0.3s;
+}
+
+.slide-right-enter-from,
+.slide-right-leave-to {
+    transform: translateX(50%);
+    opacity: 0;
+}
+
+.slide-left-enter-from,
+.slide-left-leave-to {
+    transform: translateX(-50%);
+    opacity: 0;
+}
+
+.slide-bottom-enter-from,
+.slide-bottom-leave-to {
+    transform: translateY(25%);
+    opacity: 0;
+}
+
+.slide-top-enter-from,
+.slide-top-leave-to {
+    transform: translateY(-50%);
+    opacity: 0;
+}
+
+/*
+  Fade Transition
+*/
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+/*
+  Slide Fade Combined Transition
+*/
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-fade-enter-from {
+    transform: translateY(10px);
+    opacity: 0;
+}
+
+.slide-fade-leave-to {
+    transform: translateY(-10px);
+    opacity: 0;
+}
+
+/* Add appear transition classes */
+.slide-fade-appear-active {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-fade-appear-from {
+    transform: translateY(10px);
+    opacity: 0;
+}
+
+/* Optional: Add class for leaving state */
+.is-leaving {
+    pointer-events: none;
 }
 </style>
