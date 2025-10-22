@@ -8,8 +8,6 @@ import DataTable from "primevue/datatable";
 import { useConfirm } from "primevue/useconfirm";
 import { onMounted, ref, watch } from "vue";
 
-import AppLayout from "@/Layouts/AppLayout.vue";
-
 const props = defineProps({
     recipes: {
         type: [Array, Object],
@@ -75,114 +73,111 @@ const restoreRowData = (data) => {
 </script>
 
 <template>
-    <AppLayout title="Recipe Admin">
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex flex-row mb-5">
-                    <h1 class="text-5xl font-extrabold dark:text-white grow">
-                        Recipe Admin
-                    </h1>
-                    <Link :href="route('admin.recipes.create')">
-                        <Button label="Add New" />
-                    </Link>
-                </div>
-                <DataTable
-                    :value="tableData"
-                    table-style="min-width: 50rem"
-                    striped-rows
-                >
-                    <Column
-                        header="Name"
-                        class="text-surface-700 dark:text-white/70"
-                    >
-                        <template #body="{ data }">
-                            <Link
-                                :href="
-                                    route('admin.recipes.edit', {
-                                        recipe: data.slug,
-                                    })
-                                "
-                            >
-                                {{ data.name }}
-                            </Link>
-                        </template>
-                    </Column>
-                    <Column header="Labels" class="">
-                        <template #body="{ data }">
-                            <Chip
-                                v-for="label in data.labels"
-                                :key="label.slug"
-                                :label="label.name"
-                                class="mr-2"
-                            />
-                        </template>
-                    </Column>
-                    <Column header="Categories" class="">
-                        <template #body="{ data }">
-                            <Chip
-                                v-for="category in data.categories"
-                                :key="category.slug"
-                                :label="category.name"
-                                class="mr-2"
-                            />
-                        </template>
-                    </Column>
-                    <Column header="" class="text-right">
-                        <template #body="{ data }">
-                            <Link
-                                :href="
-                                    route('recipe.show', { recipe: data.slug })
-                                "
-                            >
-                                <Button
-                                    v-tooltip.top="'View'"
-                                    severity="info"
-                                    size="small"
-                                >
-                                    <i class="pi pi-eye" />
-                                </Button>
-                            </Link>
-                            <Link
-                                :href="
-                                    route('admin.recipes.edit', {
-                                        recipe: data.slug,
-                                    })
-                                "
-                            >
-                                <Button
-                                    v-tooltip.top="'Edit'"
-                                    severity="help"
-                                    size="small"
-                                    class="ml-3"
-                                >
-                                    <i class="pi pi-pencil" />
-                                </Button>
-                            </Link>
-                            <Button
-                                v-if="!data.deleted_at"
-                                v-tooltip.top="'Delete'"
-                                severity="danger"
-                                size="small"
-                                class="ml-3"
-                                @click="deleteRowData(data)"
-                            >
-                                <i class="pi pi-trash" />
-                            </Button>
-                            <Button
-                                v-else
-                                v-tooltip.top="'Restore'"
-                                severity="success"
-                                size="small"
-                                class="ml-3"
-                                @click="restoreRowData(data)"
-                            >
-                                <i class="pi pi-replay" />
-                            </Button>
-                        </template>
-                    </Column>
-                </DataTable>
+    <Head :title="`Recipe Admin`" />
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex flex-row mb-5">
+                <h1 class="text-5xl font-extrabold dark:text-white grow">
+                    Recipe Admin
+                </h1>
+                <Link :href="route('admin.recipes.create')">
+                    <Button label="Add New" />
+                </Link>
             </div>
-            <ConfirmDialog />
+            <DataTable
+                :value="tableData"
+                table-style="min-width: 50rem"
+                striped-rows
+            >
+                <Column
+                    header="Name"
+                    class="text-surface-700 dark:text-white/70"
+                >
+                    <template #body="{ data }">
+                        <Link
+                            :href="
+                                route('admin.recipes.edit', {
+                                    recipe: data.slug,
+                                })
+                            "
+                        >
+                            {{ data.name }}
+                        </Link>
+                    </template>
+                </Column>
+                <Column header="Labels" class="">
+                    <template #body="{ data }">
+                        <Chip
+                            v-for="label in data.labels"
+                            :key="label.slug"
+                            :label="label.name"
+                            class="mr-2"
+                        />
+                    </template>
+                </Column>
+                <Column header="Categories" class="">
+                    <template #body="{ data }">
+                        <Chip
+                            v-for="category in data.categories"
+                            :key="category.slug"
+                            :label="category.name"
+                            class="mr-2"
+                        />
+                    </template>
+                </Column>
+                <Column header="" class="text-right whitespace-nowrap">
+                    <template #body="{ data }">
+                        <Link
+                            :href="route('recipe.show', { recipe: data.slug })"
+                        >
+                            <Button
+                                v-tooltip.top="'View'"
+                                severity="info"
+                                size="small"
+                            >
+                                <i class="pi pi-eye" />
+                            </Button>
+                        </Link>
+                        <Link
+                            :href="
+                                route('admin.recipes.edit', {
+                                    recipe: data.slug,
+                                })
+                            "
+                        >
+                            <Button
+                                v-tooltip.top="'Edit'"
+                                severity="help"
+                                size="small"
+                                class="ml-3"
+                            >
+                                <i class="pi pi-pencil" />
+                            </Button>
+                        </Link>
+                        <Button
+                            v-if="!data.deleted_at"
+                            v-tooltip.top="'Delete'"
+                            severity="danger"
+                            size="small"
+                            class="ml-3"
+                            @click="deleteRowData(data)"
+                        >
+                            <i class="pi pi-trash" />
+                        </Button>
+                        <Button
+                            v-else
+                            v-tooltip.top="'Restore'"
+                            severity="success"
+                            size="small"
+                            class="ml-3"
+                            @click="restoreRowData(data)"
+                        >
+                            <i class="pi pi-replay" />
+                        </Button>
+                    </template>
+                </Column>
+            </DataTable>
         </div>
-    </AppLayout>
+        <ConfirmDialog />
+    </div>
 </template>

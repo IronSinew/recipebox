@@ -19,15 +19,9 @@ class LabelController extends Controller
     {
         $perPageAmount = 9;
 
-        // @codeCoverageIgnoreStart
-        if ($request->wantsJson()) {
-            return $label->recipes()->orderBy('id')->cursorPaginate($perPageAmount);
-        }
-        // @codeCoverageIgnoreEnd
-
         return Inertia::render('Recipe/RecipeList')->with([
             'label' => fn () => $label,
-            'recipes' => fn () => $label->recipes()->orderBy('id')->cursorPaginate($perPageAmount),
+            'recipes' => Inertia::scroll(fn () => $label->recipes()->orderBy('id')->cursorPaginate($perPageAmount)),
         ]);
     }
 }

@@ -35,7 +35,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereOrderColumn($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Category withoutTrashed()
  * @mixin \Eloquent
  */
@@ -67,7 +67,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereOrderColumn($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Label withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Label withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Label withoutTrashed()
  * @mixin \Eloquent
  */
@@ -121,7 +121,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereTotalTime($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Recipe withoutTrashed()
  * @mixin \Eloquent
  */

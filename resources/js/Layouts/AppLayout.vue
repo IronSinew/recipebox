@@ -173,6 +173,7 @@ const logout = () => {
                                     })
                                 "
                                 class="absolute inset-0"
+                                @click="searchModal.visible = false"
                             />
                         </div>
                         <div v-else class="h-full">No Result</div>
@@ -369,11 +370,10 @@ const logout = () => {
             </nav>
 
             <!-- Page Heading -->
-            <header
-                v-if="$slots.header"
-                class="bg-white dark:bg-gray-800 shadow"
-            >
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <header id="header-slot" class="bg-white dark:bg-gray-800 shadow">
+                <div
+                    class="header-wrapper max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8"
+                >
                     <slot name="header" />
                 </div>
             </header>
@@ -483,6 +483,13 @@ const logout = () => {
     </div>
 </template>
 <style lang="scss">
+#header-slot > .header-wrapper {
+    display: none;
+}
+
+#header-slot > .header-wrapper:has(*) {
+    display: block;
+}
 div#mainSearch.autocomplete-search > input {
     padding-left: 45px !important;
     @apply py-4 w-full;
