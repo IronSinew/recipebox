@@ -187,6 +187,10 @@ return [
                             'name' => 'slug',
                             'type' => 'string',
                         ],
+                        [
+                            'name' => 'created_at',
+                            'type' => 'int64',
+                        ],
                     ],
                     'token_separators' => ['-'],
                     'default_sorting_field' => 'created_at',
