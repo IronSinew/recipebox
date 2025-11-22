@@ -93,7 +93,7 @@ class Recipe extends Model implements HasMedia
             'id' => (string) $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            // 'created_at' => $this->created_at->timestamp,
+            'created_at' => $this->created_at->timestamp ?? 0,
             // 'ingredients' => $this->ingredients,
         ];
     }
