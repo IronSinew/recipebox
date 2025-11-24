@@ -101,7 +101,7 @@ onUnmounted(() => {
         <img
             :src="recipe.hero ? recipe.hero : '/assets/recipe-hero-no-img.png'"
             :alt="recipe.name"
-            class="w-full object-cover"
+            class="w-full hero-image"
         />
     </div>
 
@@ -331,6 +331,11 @@ onUnmounted(() => {
     </div>
 </template>
 <style lang="scss">
+.hero-image {
+    height: 100% !important;
+    min-width: 100%;
+    object-fit: cover;
+}
 @media (width >= 720px) {
     .gallery-container {
         display: grid;
